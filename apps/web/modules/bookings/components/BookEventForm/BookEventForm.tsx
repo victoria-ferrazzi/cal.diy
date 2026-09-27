@@ -1,5 +1,6 @@
 import { getPaymentAppData } from "@calcom/app-store/_utils/payments/getPaymentAppData";
 import { useIsPlatformBookerEmbed } from "@calcom/atoms/hooks/useIsPlatformBookerEmbed";
+import dayjs from "@calcom/dayjs";
 import { useBookerStoreContext } from "@calcom/features/bookings/Booker/BookerStoreProvider";
 import { useBookerTime } from "@calcom/features/bookings/Booker/hooks/useBookerTime";
 import type { UseBookingFormReturnType } from "@calcom/features/bookings/Booker/hooks/useBookingForm";
@@ -19,6 +20,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { FieldError } from "react-hook-form";
 import type { IUseBookingErrors, IUseBookingLoadingStates } from "../../hooks/useBookings";
+import { OutsideBusinessHoursAlert } from "../OutsideBusinessHoursAlert";
 import { BookingFields } from "./BookingFields";
 import { FormSkeleton } from "./Skeleton";
 
@@ -64,7 +66,10 @@ export const BookEventForm = ({
   eventQuery: {
     isError: boolean;
     isPending: boolean;
-    data?: Pick<BookerEvent, "price" | "currency" | "metadata" | "bookingFields" | "locations"> | null;
+    data?: Pick<
+      BookerEvent,
+      "price" | "currency" | "metadata" | "bookingFields" | "locations" | "length"
+    > | null;
   };
 }) => {
   const eventType = eventQuery.data;
@@ -131,6 +136,16 @@ export const BookEventForm = ({
           bookingData={bookingData}
           isPaidEvent={isPaidEvent}
           paymentCurrency={paymentCurrency}
+        />
+        <OutsideBusinessHoursAlert
+          className="my-2"
+          timeZone={timezone}
+          ranges={[
+            {
+              start: timeslot,
+              end: dayjs(timeslot).add(eventType.length, "minute").toISOString(),
+            },
+          ]}
         />
         {errors.hasFormErrors || errors.hasDataErrors ? (
           <div data-testid="booking-fail">

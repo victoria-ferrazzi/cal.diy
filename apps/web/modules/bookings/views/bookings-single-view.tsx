@@ -66,6 +66,7 @@ import { useCalcomTheme } from "@calcom/ui/styles";
 import CancelBooking from "@calcom/web/components/booking/CancelBooking";
 import EventReservationSchema from "@calcom/web/components/schemas/EventReservationSchema";
 import { timeZone } from "@calcom/web/lib/clock";
+import { OutsideBusinessHoursAlert } from "@calcom/web/modules/bookings/components/OutsideBusinessHoursAlert";
 
 import { usePaymentStatus } from "../hooks/usePaymentStatus";
 import type { PageProps } from "./bookings-single-view.getServerSideProps";
@@ -631,6 +632,24 @@ export default function Success(props: PageProps) {
                             is24h={is24h}
                             isCancelled={isCancelled}
                             tz={tz}
+                          />
+                        </div>
+                        <div className="col-span-3 mb-6">
+                          <OutsideBusinessHoursAlert
+                            timeZone={tz}
+                            ranges={
+                              props.recurringBookings?.length
+                                ? props.recurringBookings.map((occurrence) => ({
+                                    start: occurrence,
+                                    end: dayjs(occurrence)
+                                      .add(
+                                        dayjs(bookingInfo.endTime).diff(bookingInfo.startTime, "minute"),
+                                        "minute"
+                                      )
+                                      .toDate(),
+                                  }))
+                                : [{ start: bookingInfo.startTime, end: bookingInfo.endTime }]
+                            }
                           />
                         </div>
                         {(bookingInfo?.user || bookingInfo?.attendees) && (
