@@ -1,0 +1,5 @@
+{
+  "state": "failed",
+  "exitCode": 1,
+  "error": "⚠ Workspace Trust Required\n\n  Cursor Agent can execute code and access files in this directory.\n  Do you trust the contents of this directory?\n\n    /home/vferrazzi/other-projects/cal.diy\n\n  To proceed, you can either:\n    • Run 'agent' interactively to decide\n    • Pass --trust, --yolo, or -f if you trust this directory"
+}

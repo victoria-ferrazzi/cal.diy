@@ -1,0 +1,1 @@
+Invalid --output-format. Allowed values: text, json, stream-json
