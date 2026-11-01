@@ -49,6 +49,7 @@ import {
   createBookingSheetKeydownHandler,
 } from "../lib/bookingSheetKeyboardHandler";
 import { JoinMeetingButton } from "./JoinMeetingButton";
+import { OutsideBusinessHoursAlert } from "./OutsideBusinessHoursAlert";
 
 type BookingMetaData = z.infer<typeof bookingMetadataSchema>;
 
@@ -530,6 +531,10 @@ function WhenSection({
           timeZone={timeZone}
         />
       </div>
+      <OutsideBusinessHoursAlert
+        timeZone={timeZone}
+        ranges={[{ start: startTime, end: endTime }]}
+      />
     </Section>
   );
 }
