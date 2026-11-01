@@ -1,0 +1,5 @@
+{
+  "state": "failed",
+  "exitCode": 1,
+  "error": "Invalid --output-format. Allowed values: text, json, stream-json"
+}
