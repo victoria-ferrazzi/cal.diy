@@ -133,6 +133,7 @@
   "unavailable_timeslot_title": "Horário indisponível",
   "outside_business_hours_title": "Fora do horário comercial",
   "outside_business_hours_message": "Esta reserva está fora do horário comercial (segunda a sexta, das 9:00 às 18:00).",
+  "short_break_message": "Menos de 10 minutos entre reuniões consecutivas.",
   "booking_time_out_of_bounds_error": "O tipo de evento não pode ser agendado neste horário. Você poderia tentar outro horário?",
   "bookings_v3_title": "Experimente a nova página de reservas",
   "bookings_v3_name": "Reservas aprimoradas",

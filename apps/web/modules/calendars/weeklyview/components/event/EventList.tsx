@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { shallow } from "zustand/shallow";
 
 import dayjs from "@calcom/dayjs";
+import { idsWithShortBreak } from "@calcom/lib/shortBreak";
 import classNames from "@calcom/ui/classNames";
 
 import { useCalendarStore } from "@calcom/features/calendars/weeklyview/state/store";
@@ -13,12 +14,13 @@ type Props = {
 };
 
 export function EventList({ day }: Props) {
-  const { startHour, events, eventOnClick, selectedBookingUid } = useCalendarStore(
+  const { startHour, events, eventOnClick, selectedBookingUid, timezone } = useCalendarStore(
     (state) => ({
       startHour: state.startHour,
       events: state.events,
       eventOnClick: state.onEventClick,
       selectedBookingUid: state.selectedBookingUid,
+      timezone: state.timezone,
     }),
     shallow
   );
@@ -30,6 +32,18 @@ export function EventList({ day }: Props) {
       return dayjs(event.start).isSame(day, "day") && !event.options?.allDay;
     });
   }, [events, day]);
+
+  const shortBreakIds = useMemo(() => {
+    return new Set(
+      idsWithShortBreak(
+        dayEvents.map((event) => ({
+          id: event.id,
+          start: dayjs(event.start).tz(timezone),
+          end: dayjs(event.end).tz(timezone),
+        }))
+      )
+    );
+  }, [dayEvents, timezone]);
 
   const layoutMap = useMemo(() => {
     const layouts = calculateEventLayouts(dayEvents);
@@ -127,6 +141,7 @@ export function EventList({ day }: Props) {
               onEventClick={eventOnClick}
               isHovered={isHovered}
               currentlySelectedEventId={selectedEventId}
+              shortBreak={shortBreakIds.has(event.id)}
             />
           </div>
         );
