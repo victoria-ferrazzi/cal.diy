@@ -1,5 +1,6 @@
 import dayjs from "@calcom/dayjs";
 import type { CalendarEvent } from "@calcom/features/calendars/weeklyview/types/events";
+import { useLocale } from "@calcom/lib/hooks/useLocale";
 import type { BookingStatus } from "@calcom/prisma/enums";
 import classNames from "@calcom/ui/classNames";
 import { Tooltip } from "@calcom/ui/components/tooltip";
@@ -12,6 +13,7 @@ type EventProps = {
   onEventClick?: (event: CalendarEvent) => void;
   disabled?: boolean;
   isHovered?: boolean;
+  shortBreak?: boolean;
 };
 
 const eventClasses = cva(
@@ -64,7 +66,9 @@ export function Event({
   disabled,
   onEventClick,
   isHovered = false,
+  shortBreak = false,
 }: EventProps) {
+  const { t } = useLocale();
   const selected = currentlySelectedEventId === event.id;
   const { options } = event;
 
@@ -94,6 +98,7 @@ export function Event({
           {event.description && (
             <div className="text-inverted-muted mt-1 text-xs leading-snug">{event.description}</div>
           )}
+          {shortBreak && <div className="mt-1 text-xs">{t("short_break_message")}</div>}
           {options?.status && options.status !== "ACCEPTED" && (
             <div className="text-inverted-muted mt-1 text-xs capitalize">
               {options.status.toLowerCase().replace("_", " ")}
@@ -120,6 +125,7 @@ export function Event({
             borderOnly: options?.borderOnly ?? false,
           }),
           options?.className,
+          "relative",
           (isHovered || selected) && "ring-brand-default shadow-lg ring-2 ring-offset-0"
         )}
         style={{
@@ -129,6 +135,12 @@ export function Event({
           <div
             className={classNames("-ml-1.5 mr-1.5 h-full w-[3px] shrink-0", colorClass)}
             style={options?.color ? { backgroundColor: options.color } : undefined}></div>
+        )}
+        {shortBreak && (
+          <span
+            data-testid="short-break-warning"
+            className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-orange-500"
+          />
         )}
         <div className={classNames("flex w-full", displayType !== "single-line" && "flex-col py-1")}>
           {displayType === "single-line" && (
