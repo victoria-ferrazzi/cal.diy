@@ -34,7 +34,7 @@ export async function runTask(task, { extraArgs = [] } = {}) {
     return { dir, state: "failed", exitCode: 1, error, result: "" };
   }
 
-  const args = ["-p", "--force", "--output-format", "json", ...extraArgs, task];
+  const args = ["-p", "--trust", "--output-format", "json", ...extraArgs, task];
   const child = spawn("cursor-agent", args, {
     cwd: repoRoot,
     stdio: ["ignore", "pipe", "pipe"],

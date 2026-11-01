@@ -10,7 +10,7 @@ Na raiz do fork, com `cursor-agent status` autenticado:
 node harness/run.mjs "Localize o fluxo de disponibilidade e liste os arquivos envolvidos. Não edite arquivos."
 ```
 
-O comando imprime o diretório da execução e termina com código 0 só quando o agente termina com código 0.
+O comando imprime o diretório da execução e termina com código 0 só quando o agente termina com código 0. O script passa `--trust` para confirmar o workspace e não passa `--force`.
 
 Cada execução cria `harness/runs/<id>/`:
 
