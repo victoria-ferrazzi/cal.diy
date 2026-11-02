@@ -1,0 +1,13 @@
+{
+  "pr": 6,
+  "sha": "ad4e5f1d7243b6aa29ee73791a8d10af27e722be",
+  "checks": [
+    {
+      "name": "git diff --check",
+      "sha": "ad4e5f1d7243b6aa29ee73791a8d10af27e722be",
+      "passed": true,
+      "origin": "git diff --check 7577ff1562b5ffd561f7e45b06f7cfc5b3fa4a24...ad4e5f1d7243b6aa29ee73791a8d10af27e722be",
+      "output": ""
+    }
+  ]
+}

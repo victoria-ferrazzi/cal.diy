@@ -1,0 +1,5 @@
+{
+  "allowed": ["*.md", "packages/i18n/locales/**/*.json"],
+  "maxChangedLines": 80,
+  "requiredChecks": ["git diff --check"]
+}

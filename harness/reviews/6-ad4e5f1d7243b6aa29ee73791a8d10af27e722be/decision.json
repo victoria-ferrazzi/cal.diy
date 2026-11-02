@@ -1,0 +1,11 @@
+{
+  "pr": 6,
+  "sha": "ad4e5f1d7243b6aa29ee73791a8d10af27e722be",
+  "decision": "auto-approve",
+  "reasons": [
+    "os arquivos do diff estão na allowlist",
+    "o diff tem 3 linhas, dentro do limite de 80",
+    "os checks exigidos passaram para este commit",
+    "a cabeça da PR é o commit das evidências"
+  ]
+}

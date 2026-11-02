@@ -1,0 +1,8 @@
+{
+  "pr": 7,
+  "sha": "4f35fac0b3e4786771c20581f329c8eafd54a0fa",
+  "decision": "human-review",
+  "reasons": [
+    "a cabeça da PR é ca3e78a0197517ce005fb9f19f3798027b8065e2, e as evidências são do commit 4f35fac0b3e4786771c20581f329c8eafd54a0fa"
+  ]
+}
