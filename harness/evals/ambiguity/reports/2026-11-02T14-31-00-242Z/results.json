@@ -1,0 +1,216 @@
+{
+  "rubricVersion": "v1",
+  "runs": [
+    {
+      "set": "calibration",
+      "id": "clara",
+      "attempt": 1,
+      "humanScore": 0,
+      "humanJustification": "Objetivo, arquivo e critérios de aceite estão na issue. O contexto repete a mesma regra. Dá para planejar sem decisão nova.",
+      "result": {
+        "score": 0,
+        "inconclusive": false,
+        "evidence": [
+          "Na visão semanal, sinalizar as duas reuniões de um par quando o fim de uma e o início da próxima têm menos de 10 minutos.",
+          "Usar packages/lib/shortBreak.ts. Dez minutos exatos não sinalizam. Sobreposição sinaliza. Eventos de dia inteiro ficam de fora. O aviso não bloqueia o clique.",
+          "No dia exibido no calendário semanal, as duas reuniões de um par são sinalizadas quando o fim de uma e o início da próxima têm menos de 10 minutos. Dez minutos exatos não sinalizam. Sobreposição sinaliza. Eventos de dia inteiro ficam de fora. O aviso não bloqueia o clique.",
+          "A conta usa os instantes já convertidos para o timezone do calendário (CURRENT_TIMEZONE em packages/lib/timezoneConstants.ts, quando o store não recebe outro). A regra está em packages/lib/shortBreak.ts."
+        ],
+        "missing": [],
+        "questions": [],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    },
+    {
+      "set": "calibration",
+      "id": "clara",
+      "attempt": 2,
+      "humanScore": 0,
+      "humanJustification": "Objetivo, arquivo e critérios de aceite estão na issue. O contexto repete a mesma regra. Dá para planejar sem decisão nova.",
+      "result": {
+        "score": 0,
+        "inconclusive": false,
+        "evidence": [
+          "Na visão semanal, sinalizar as duas reuniões de um par quando o fim de uma e o início da próxima têm menos de 10 minutos.",
+          "Usar packages/lib/shortBreak.ts.",
+          "Dez minutos exatos não sinalizam. Sobreposição sinaliza. Eventos de dia inteiro ficam de fora. O aviso não bloqueia o clique.",
+          "No dia exibido no calendário semanal, as duas reuniões de um par são sinalizadas quando o fim de uma e o início da próxima têm menos de 10 minutos.",
+          "A conta usa os instantes já convertidos para o timezone do calendário (CURRENT_TIMEZONE em packages/lib/timezoneConstants.ts, quando o store não recebe outro). A regra está em packages/lib/shortBreak.ts."
+        ],
+        "missing": [],
+        "questions": [],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    },
+    {
+      "set": "calibration",
+      "id": "decisao-ausente",
+      "attempt": 1,
+      "humanScore": 2,
+      "humanJustification": "O objetivo está dito e a tela está indicada. O plano da autorização depende de uma regra que a issue e o contexto não definem: qualquer membro, só admin, ou só o dono da agenda.",
+      "result": {
+        "score": 3,
+        "inconclusive": false,
+        "evidence": [
+          "Membros da equipe precisam editar a disponibilidade uns dos outros.",
+          "A tela de disponibilidade passa a permitir essa edição.",
+          "O contexto só localiza horário em `packages/lib/businessHours.ts` e intervalo curto em `packages/lib/shortBreak.ts`; não cita tela, membros nem edição de disponibilidade."
+        ],
+        "missing": [
+          "Comportamento verificável da edição: o que muda na tela, o que é salvo e como confirmar que ficou pronto.",
+          "Módulo, arquivo ou responsabilidade da tela de disponibilidade.",
+          "Regra de quem pode editar a disponibilidade de quem.",
+          "Definição dos dados de disponibilidade que podem ser alterados."
+        ],
+        "questions": [
+          "Quais membros podem editar a disponibilidade de quais outros membros?",
+          "Quais dados de disponibilidade podem ser alterados e qual resultado observável confirma o salvamento?",
+          "Em qual módulo ou tela existente essa edição deve acontecer?"
+        ],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    },
+    {
+      "set": "calibration",
+      "id": "decisao-ausente",
+      "attempt": 2,
+      "humanScore": 2,
+      "humanJustification": "O objetivo está dito e a tela está indicada. O plano da autorização depende de uma regra que a issue e o contexto não definem: qualquer membro, só admin, ou só o dono da agenda.",
+      "result": {
+        "score": 2,
+        "inconclusive": false,
+        "evidence": [
+          "Membros da equipe precisam editar a disponibilidade uns dos outros.",
+          "A tela de disponibilidade passa a permitir essa edição.",
+          "O contexto só descreve horário em packages/lib/businessHours.ts e intervalo curto em packages/lib/shortBreak.ts."
+        ],
+        "missing": [
+          "Regra de quem pode editar a disponibilidade de quem.",
+          "O que da disponibilidade pode ser alterado.",
+          "Comportamento verificável que mostra que a edição ficou pronta."
+        ],
+        "questions": [
+          "Qualquer membro pode editar a disponibilidade de qualquer outro, ou só alguns papéis?",
+          "Quais dados da disponibilidade a tela passa a permitir alterar?",
+          "O que se observa para confirmar que a edição de outro membro foi concluída?"
+        ],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    },
+    {
+      "set": "calibration",
+      "id": "vaga",
+      "attempt": 1,
+      "humanScore": 3,
+      "humanJustification": "Não há resultado, lugar da mudança nem critério de aceite. Não dá para planejar.",
+      "result": {
+        "score": 3,
+        "inconclusive": false,
+        "evidence": [
+          "Melhorar a disponibilidade",
+          "Melhorar a disponibilidade.",
+          "O contexto só descreve regras já implementadas em packages/lib/businessHours.ts, OutsideBusinessHoursAlert e packages/lib/shortBreak.ts; não define o que esta issue muda."
+        ],
+        "missing": [
+          "Resultado que a mudança produz",
+          "Arquivo, módulo ou responsabilidade que restringe o trabalho",
+          "Comportamento verificável de aceite"
+        ],
+        "questions": [
+          "O que deve ficar diferente na disponibilidade?",
+          "Qual superfície entra na mudança?",
+          "Qual comportamento observável confirma que ficou pronto?"
+        ],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    },
+    {
+      "set": "calibration",
+      "id": "vaga",
+      "attempt": 2,
+      "humanScore": 3,
+      "humanJustification": "Não há resultado, lugar da mudança nem critério de aceite. Não dá para planejar.",
+      "result": {
+        "score": 3,
+        "inconclusive": false,
+        "evidence": [
+          "A issue pede somente \"Melhorar a disponibilidade\" e repete \"Melhorar a disponibilidade.\"",
+          "O contexto descreve regras já implementadas em packages/lib/businessHours.ts e packages/lib/shortBreak.ts, sem definir uma mudança de disponibilidade."
+        ],
+        "missing": [
+          "O resultado que a mudança deve produzir.",
+          "O arquivo, módulo ou responsabilidade onde a mudança ocorre.",
+          "Um comportamento verificável que indique que a disponibilidade ficou pronta."
+        ],
+        "questions": [
+          "O que deve mudar na disponibilidade e qual resultado observável define que ficou pronto?",
+          "A alteração vale para horário comercial, intervalo curto entre reuniões ou outra regra?",
+          "Em qual módulo ou superfície a mudança deve ser feita?"
+        ],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    },
+    {
+      "set": "holdout",
+      "id": "reservada-clara",
+      "attempt": 1,
+      "humanScore": 0,
+      "humanJustification": "Objetivo, componente e aceite estão na issue. O contexto já define que a interface avisa e não bloqueia, no horário de segunda a sexta, 09:00–18:00.",
+      "result": {
+        "score": 0,
+        "inconclusive": false,
+        "evidence": [
+          "O aviso de horário comercial deve dizer que o intervalo está fora de segunda a sexta, 09:00–18:00, e que a reserva não é bloqueada.",
+          "A mudança é só o texto exibido por OutsideBusinessHoursAlert.",
+          "A interface só avisa. Não bloqueia a reserva.",
+          "Segunda a sexta, um intervalo que começa às 09:00 ou depois e termina até 18:00 está dentro do horário."
+        ],
+        "missing": [],
+        "questions": [],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    },
+    {
+      "set": "holdout",
+      "id": "reservada-vaga",
+      "attempt": 1,
+      "humanScore": 3,
+      "humanJustification": "Não há resultado, escopo nem aceite. Não dá para planejar.",
+      "result": {
+        "score": 3,
+        "inconclusive": false,
+        "evidence": [
+          "Issue: \"Deixar o agendamento mais fácil\" / \"Deixar o agendamento mais fácil.\"",
+          "O contexto descreve o comportamento atual de horário em `packages/lib/businessHours.ts` e de intervalo curto em `packages/lib/shortBreak.ts`, sem pedir uma mudança."
+        ],
+        "missing": [
+          "Resultado que a mudança deve produzir.",
+          "Arquivo, módulo ou responsabilidade a alterar.",
+          "Comportamento verificável que mostre que o agendamento ficou mais fácil."
+        ],
+        "questions": [
+          "O que deve mudar no agendamento e qual resultado isso produz?",
+          "Qual superfície ou módulo entra no escopo?",
+          "Qual comportamento observável confirma que a mudança ficou pronta?"
+        ],
+        "error": null,
+        "rubricVersion": "v1",
+        "model": "Grok 4.7"
+      }
+    }
+  ]
+}

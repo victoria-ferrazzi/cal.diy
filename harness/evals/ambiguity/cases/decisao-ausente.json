@@ -1,0 +1,7 @@
+{
+  "id": "decisao-ausente",
+  "title": "Membros editam a disponibilidade uns dos outros",
+  "body": "Membros da equipe precisam editar a disponibilidade uns dos outros. A tela de disponibilidade passa a permitir essa edição.",
+  "humanScore": 2,
+  "humanJustification": "O objetivo está dito e a tela está indicada. O plano da autorização depende de uma regra que a issue e o contexto não definem: qualquer membro, só admin, ou só o dono da agenda."
+}

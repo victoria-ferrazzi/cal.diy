@@ -1,0 +1,7 @@
+{
+  "id": "clara",
+  "title": "Avisar intervalo curto na visão semanal",
+  "body": "Na visão semanal, sinalizar as duas reuniões de um par quando o fim de uma e o início da próxima têm menos de 10 minutos. Usar packages/lib/shortBreak.ts. Dez minutos exatos não sinalizam. Sobreposição sinaliza. Eventos de dia inteiro ficam de fora. O aviso não bloqueia o clique.",
+  "humanScore": 0,
+  "humanJustification": "Objetivo, arquivo e critérios de aceite estão na issue. O contexto repete a mesma regra. Dá para planejar sem decisão nova."
+}
