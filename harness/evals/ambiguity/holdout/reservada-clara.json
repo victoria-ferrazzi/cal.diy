@@ -1,0 +1,7 @@
+{
+  "id": "reservada-clara",
+  "title": "Texto do aviso de horário comercial",
+  "body": "O aviso de horário comercial deve dizer que o intervalo está fora de segunda a sexta, 09:00–18:00, e que a reserva não é bloqueada. A mudança é só o texto exibido por OutsideBusinessHoursAlert.",
+  "humanScore": 0,
+  "humanJustification": "Objetivo, componente e aceite estão na issue. O contexto já define que a interface avisa e não bloqueia, no horário de segunda a sexta, 09:00–18:00."
+}
