@@ -13,5 +13,12 @@
     6594930679,
     6594984346
   ],
-  "updated_at": "2026-11-03T03:51:43.545Z"
+  "updated_at": "2026-11-03T03:52:11.612Z",
+  "pm": {
+    "summary": "Ajustar o aviso OutsideBusinessHoursAlert.tsx para informar que a reserva fora do horário comercial continua possível. O aviso só aparece quando isOutsideBusinessHours é verdadeiro, a regra em packages/lib/businessHours.ts não muda, e os textos pt, pt-BR e en já estão definidos na issue.",
+    "questions": [],
+    "scope_type": "change",
+    "complexity": "simple",
+    "requires_plan_approval": true
+  }
 }
