@@ -3,8 +3,8 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
-import { repoRoot, runAgent } from "./agent.mjs";
-import { createGitHub } from "./github.mjs";
+import { repoRoot, runAgent } from "./controller/agent.mjs";
+import { createGitHub } from "./controller/github.mjs";
 import {
   codeReviewGate,
   designRequired,
@@ -14,7 +14,7 @@ import {
   planFingerprint,
   planNeedsApproval,
   safePath,
-} from "./policy.mjs";
+} from "./controller/policy.mjs";
 
 const MAX_PLAN_REVISIONS = 1;
 const MAX_IMPLEMENT_ATTEMPTS = 2;
