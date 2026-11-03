@@ -3,7 +3,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-
 import { OutsideBusinessHoursAlert } from "./OutsideBusinessHoursAlert";
 
 vi.mock("@calcom/lib/hooks/useLocale", () => ({
@@ -12,7 +11,10 @@ vi.mock("@calcom/lib/hooks/useLocale", () => ({
   }),
 }));
 
-const localesDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../../packages/i18n/locales");
+const localesDir = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../../../../../packages/i18n/locales"
+);
 
 function readCommon(locale: string): Record<string, string> {
   return JSON.parse(readFileSync(path.join(localesDir, locale, "common.json"), "utf8"));
@@ -60,10 +62,7 @@ describe("OutsideBusinessHoursAlert", () => {
     render(
       <OutsideBusinessHoursAlert
         timeZone="America/Sao_Paulo"
-        ranges={[
-          mondayInside,
-          { start: "2026-10-03T13:00:00.000Z", end: "2026-10-03T14:00:00.000Z" },
-        ]}
+        ranges={[mondayInside, { start: "2026-10-03T13:00:00.000Z", end: "2026-10-03T14:00:00.000Z" }]}
       />
     );
 
