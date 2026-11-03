@@ -15,7 +15,7 @@
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T05:04:13.192Z",
+  "updated_at": "2026-11-03T05:11:04.913Z",
   "pm": {
     "summary": "Ajustar só a cópia do aviso de horário comercial: a mensagem passa a dizer que a reserva continua possível e deixa de mostrar o intervalo (segunda a sexta, 9:00–18:00). O título permanece, o aviso continua só quando isOutsideBusinessHours é verdadeiro e a regra em businessHours.ts não muda. Escopo: OutsideBusinessHoursAlert.tsx e os common.json de pt, pt-BR e en.",
     "questions": [],
@@ -68,7 +68,7 @@
     "fingerprint": "0da17dfe58b0e6d32fce01079634902afdfbe6317017d1306b81434ecd9571de",
     "comment_id": 6595166748
   },
-  "head_sha": "21805649481321a600fcec9b2a9f22a369a3d359",
+  "head_sha": "7e435b656dd7455ff22ae5d40311c4ff95267d68",
   "branch": "harness/issue-10",
   "pr_number": 15
 }
