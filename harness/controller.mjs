@@ -11,7 +11,9 @@ import {
   designRequired,
   digest,
   GateError,
+  issueHints,
   issueSnapshot,
+  matchingLines,
   planFingerprint,
   planNeedsApproval,
   safePath,
@@ -19,6 +21,7 @@ import {
 
 const MAX_PLAN_REVISIONS = 1;
 const MAX_IMPLEMENT_ATTEMPTS = 2;
+const IMPLEMENT_TIMEOUT_MS = 20 * 60 * 1000;
 
 function readEvent() {
   return {
@@ -186,22 +189,44 @@ async function publishPlan(github, bundle, baseSha) {
   await implement(github, bundle);
 }
 
+function implementationExcerpts(issueBody, filePaths) {
+  const hints = issueHints(issueBody);
+  const blocks = [];
+  for (const filePath of filePaths) {
+    safePath(filePath);
+    let content = "";
+    try {
+      content = readFileSync(path.join(repoRoot, filePath), "utf8");
+    } catch {
+      blocks.push(`${filePath}\narquivo novo`);
+      continue;
+    }
+    const matched = matchingLines(content, hints);
+    if (matched) {
+      blocks.push(`${filePath}\n${matched}`);
+    }
+  }
+  return blocks.join("\n\n");
+}
+
 async function implement(github, bundle, failedChecks) {
   const issueNumber = bundle.state.issue.number;
   const branch = `harness/issue-${issueNumber}`;
-  const result = await runAgent(
-    [
-      "Você é o Implementer. Não grave arquivos no disco. Responda somente com um objeto JSON.",
-      "Campos: summary (string), files (array de {path, content} ou {path, replacements}).",
-      "Para um arquivo que já existe, use replacements: array de {old, new}. old é o trecho exato e aparece uma vez. Não devolva o arquivo inteiro.",
-      "Para um arquivo novo, use content com o arquivo completo. Cada arquivo traz content ou replacements, nunca os dois.",
-      "Altere apenas os caminhos do plano. Siga agents/CONVENTIONS.md: não invente arquivo nem pasta, e aponte para um exemplo existente.",
-      `Issue: ${JSON.stringify(bundle.state.issue)}`,
-      `Plano: ${JSON.stringify(bundle.state.plan)}`,
-      failedChecks ? `Falhas de CI: ${JSON.stringify(failedChecks)}` : "",
-    ].join("\n\n"),
-    { timeoutMs: 360000 }
-  );
+  const excerpts = implementationExcerpts(bundle.state.issue.body, bundle.state.plan.files);
+  const prompt = [
+    "Você é o Implementer. Não grave arquivos no disco e não abra arquivos. Responda somente com um objeto JSON.",
+    "Campos: summary (string), files (array de {path, content} ou {path, replacements}).",
+    "Para um arquivo que já existe, use replacements: array de {old, new}. old é uma linha dos trechos abaixo e aparece uma vez. Não devolva o arquivo inteiro.",
+    "Para um arquivo marcado como novo, use content com o arquivo completo. Cada arquivo traz content ou replacements, nunca os dois.",
+    "Altere apenas os caminhos do plano. Siga agents/CONVENTIONS.md: não invente arquivo nem pasta, e aponte para um exemplo existente.",
+    `Issue: ${JSON.stringify(bundle.state.issue)}`,
+    `Plano: ${JSON.stringify(bundle.state.plan)}`,
+    `Trechos:\n${excerpts}`,
+  ];
+  if (failedChecks) {
+    prompt.push(`Falhas de CI: ${JSON.stringify(failedChecks)}`);
+  }
+  const result = await runAgent(prompt.join("\n\n"), { timeoutMs: IMPLEMENT_TIMEOUT_MS });
   if (!Array.isArray(result.files) || result.files.length === 0 || result.files.length > 10) {
     throw new GateError("Implementer returned an invalid file list");
   }

@@ -110,6 +110,31 @@ export function applyReplacements(source, replacements) {
   return next;
 }
 
+export function issueHints(body) {
+  const text = String(body ?? "");
+  const quoted = [...text.matchAll(/"([^"\n]{4,200})"/g)].map((match) => match[1]);
+  const keys = text.match(/[A-Za-z_][A-Za-z0-9]*_[A-Za-z0-9_]+/g) ?? [];
+  return [...new Set([...quoted, ...keys])].slice(0, 40);
+}
+
+export function matchingLines(content, hints, limit = 30) {
+  if (!content || hints.length === 0) {
+    return "";
+  }
+  const lines = [];
+  const rows = content.split("\n");
+  for (let index = 0; index < rows.length; index += 1) {
+    const row = rows[index];
+    if (hints.some((hint) => row.includes(hint))) {
+      lines.push(row.trim().slice(0, 500));
+    }
+    if (lines.length >= limit) {
+      break;
+    }
+  }
+  return lines.join("\n");
+}
+
 export function safePath(filePath) {
   const parsed = path.posix.normalize(filePath);
   if (path.posix.isAbsolute(filePath) || parsed !== filePath || filePath.split("/").includes("..")) {

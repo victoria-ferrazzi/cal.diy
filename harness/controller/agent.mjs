@@ -81,9 +81,12 @@ export function runAgent(
     });
     const stdout = [];
     const stderr = [];
+    process.stderr.write(`cursor-agent started timeoutMs=${timeoutMs}\n`);
     const timer = setTimeout(() => {
+      const partial = Buffer.concat(stdout).toString("utf8").slice(-400).trim();
       child.kill("SIGTERM");
-      reject(new GateError("cursor-agent timed out"));
+      const detail = partial ? `\n${partial}` : "";
+      reject(new GateError(`cursor-agent timed out${detail}`));
     }, timeoutMs);
     child.stdout.on("data", (chunk) => stdout.push(chunk));
     child.stderr.on("data", (chunk) => stderr.push(chunk));
