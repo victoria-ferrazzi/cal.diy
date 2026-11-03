@@ -13,12 +13,16 @@
     6594930679,
     6594984346
   ],
-  "updated_at": "2026-11-03T03:52:11.612Z",
+  "updated_at": "2026-11-03T03:52:57.737Z",
   "pm": {
     "summary": "Ajustar o aviso OutsideBusinessHoursAlert.tsx para informar que a reserva fora do horário comercial continua possível. O aviso só aparece quando isOutsideBusinessHours é verdadeiro, a regra em packages/lib/businessHours.ts não muda, e os textos pt, pt-BR e en já estão definidos na issue.",
     "questions": [],
     "scope_type": "change",
     "complexity": "simple",
     "requires_plan_approval": true
+  },
+  "ambiguity": {
+    "score": 2,
+    "summary": "Objetivo, arquivo e aceite estão definidos, e o texto de pt, pt-BR e en já está no issue. Falta uma decisão: os textos atuais em packages/i18n/locales trazem o trecho \"(segunda a sexta, das 9:00 às 18:00)\", que o novo texto não traz. O issue não diz se esse trecho deve ser removido ou mantido. O título \"Fora do horário comercial\" também não é mencionado. A regra em PRODUCT.md (o aviso não bloqueia) é compatível com o texto proposto."
   }
 }
