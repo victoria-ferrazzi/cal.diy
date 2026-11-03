@@ -1,5 +1,5 @@
 {
-  "status": "failed",
+  "status": "pm",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
@@ -12,16 +12,5 @@
   "clarification_comment_ids": [
     6594930679
   ],
-  "updated_at": "2026-11-03T03:47:16.376Z",
-  "pm": {
-    "summary": "Ajustar o texto do aviso existente em OutsideBusinessHoursAlert para deixar explícito que a reserva continua possível fora do horário comercial. O aviso segue aparecendo só quando isOutsideBusinessHours é verdadeiro, e a regra em businessHours.ts permanece igual. Não há tela nova nem escolha de design.",
-    "questions": [],
-    "scope_type": "change",
-    "complexity": "simple",
-    "requires_plan_approval": true
-  },
-  "ambiguity": {
-    "score": 2,
-    "summary": "Objetivo e aceite estão claros: o aviso aparece só quando isOutsideBusinessHours é verdadeiro, o texto deve dizer que a reserva não é bloqueada, e a regra em packages/lib/businessHours.ts não muda. Falta uma decisão: o texto atual (outside_business_hours_message, em packages/i18n/locales/pt, pt-BR e en) já diz 'Esta reserva está fora do horário comercial', mas não diz que a reserva continua possível. A issue lista só o componente em 'Arquivo', mas a mudança de texto teria de ser feita nos três arquivos de locale, e a issue não define o texto exato nem se os três idiomas devem mudar."
-  }
+  "updated_at": "2026-11-03T03:47:18.423Z"
 }
