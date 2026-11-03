@@ -1,0 +1,38 @@
+name: Harness CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  harness-ci:
+    name: Harness CI
+    if: github.repository == 'victoria-ferrazzi/cal.diy'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/yarn-install
+
+      - name: Diff check
+        run: git diff --check ${{ github.event.pull_request.base.sha }}...HEAD
+
+      - name: Biome on changed files
+        run: |
+          mapfile -t files < <(git diff --name-only --diff-filter=ACMR ${{ github.event.pull_request.base.sha }}...HEAD | grep -E '\.(ts|tsx|js|jsx|mjs|cjs|json|css)$' || true)
+          if [ "${#files[@]}" -gt 0 ]; then
+            yarn biome check --no-errors-on-unmatched "${files[@]}"
+          fi
+
+      - name: Test cited by the plan
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          mapfile -t tests < <(node harness/ci-plan.mjs)
+          yarn vitest run "${tests[@]}"
