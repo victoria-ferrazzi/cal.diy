@@ -88,6 +88,12 @@ function assertCurrent(bundle, issue, baseSha) {
   }
 }
 
+function assertIssueUnchanged(bundle, issue) {
+  if (digest(issueSnapshot(issue)) !== bundle.state.issue_digest) {
+    throw new GateError("Issue changed. Run the planning workflow again.");
+  }
+}
+
 async function planAndEvaluate(github, bundle) {
   const issue = bundle.state.issue;
   let planResult = await runAgent(
@@ -547,7 +553,7 @@ async function approve(github, issueNumber, actor, body, commentId) {
       await comment(github, issueNumber, "O comentário não é o SHA do commit pendente.");
       return;
     }
-    assertCurrent(bundle, issue, baseSha);
+    assertIssueUnchanged(bundle, issue);
     await save(github, bundle, "ready_to_merge", {
       code_approval: { actor, head_sha: bundle.state.head_sha, comment_id: commentId },
     });
@@ -571,8 +577,7 @@ async function onCi(github, headSha) {
     return;
   }
   const issue = await github.issue(issueNumber);
-  const baseSha = await github.mainSha();
-  assertCurrent(loaded, issue, baseSha);
+  assertIssueUnchanged(loaded, issue);
   await reviewCandidate(github, loaded);
 }
 
