@@ -1,11 +1,11 @@
 {
-  "status": "failed",
+  "status": "pm",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
-    "body": "## Objetivo\n\nO aviso de horário comercial deixa explícito que a reserva continua possível fora do horário.\n\n## Arquivo\n\n- `apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx`\n\n## Aceite\n\n- O aviso aparece somente quando `isOutsideBusinessHours` é verdadeiro.\n- O texto diz que a reserva não é bloqueada.\n- A regra em `packages/lib/businessHours.ts` permanece igual.\n- Não há tela nova nem escolha de design.\n\n## Plano\n\nPedir aprovação do plano antes da implementação."
+    "body": "## Objetivo\n\nO aviso de horário comercial deixa explícito que a reserva continua possível fora do horário.\n\n## Arquivo\n\n- `apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx`\n\n## Aceite\n\n- O aviso aparece somente quando `isOutsideBusinessHours` é verdadeiro.\n- O texto diz que a reserva não é bloqueada.\n- A regra em `packages/lib/businessHours.ts` permanece igual.\n- Não há tela nova nem escolha de design.\n\n## Plano\n\nPedir aprovação do plano antes da implementação.\n\n## Textos\npt e pt-BR: \"Esta reserva está fora do horário comercial, mas não é bloqueada.\"\nen: \"This booking is outside business hours, but it is not blocked.\""
   },
-  "issue_digest": "b5a959af2efc4d4697fbcd2a45754068dbfe35701188c61dc3b2ca3bfc98007a",
+  "issue_digest": "122810953bb4fb2bdc42ed4ca64f7573002a3d3d16fdf2fe0ea4820831a612a9",
   "base_sha": "0e5db5ece98c45b4a61bd25e6e68d33786a36ea7",
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
@@ -13,14 +13,5 @@
     6594930679,
     6594984346
   ],
-  "updated_at": "2026-11-03T03:51:41.278Z",
-  "pm": {
-    "summary": "Ajustar o aviso OutsideBusinessHoursAlert em apps/web/modules/bookings/components para dizer que a reserva continua possível fora do horário comercial. O aviso deve aparecer só quando isOutsideBusinessHours for verdadeiro, e a regra em packages/lib/businessHours.ts não muda. Não há tela nova nem decisão de design.",
-    "questions": [
-      "Qual é o texto exato do aviso, ou a equipe de produto aceita a redação proposta na implementação?"
-    ],
-    "scope_type": "change",
-    "complexity": "simple",
-    "requires_plan_approval": true
-  }
+  "updated_at": "2026-11-03T03:51:43.545Z"
 }
