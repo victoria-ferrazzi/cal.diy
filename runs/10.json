@@ -10,5 +10,12 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-03T03:42:17.780Z"
+  "updated_at": "2026-11-03T03:43:19.217Z",
+  "pm": {
+    "summary": "Ajustar o texto do aviso existente em OutsideBusinessHoursAlert para deixar explícito que a reserva continua possível fora do horário comercial. O aviso segue aparecendo só quando isOutsideBusinessHours é verdadeiro, e a regra em businessHours.ts permanece igual. Não há tela nova nem escolha de design.",
+    "questions": [],
+    "scope_type": "change",
+    "complexity": "simple",
+    "requires_plan_approval": true
+  }
 }
