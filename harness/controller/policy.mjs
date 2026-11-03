@@ -90,6 +90,26 @@ export function planFingerprint(issue, baseSha, plan, evaluation) {
   });
 }
 
+export function applyReplacements(source, replacements) {
+  if (!Array.isArray(replacements) || replacements.length === 0) {
+    throw new GateError("Replacements are missing");
+  }
+  let next = source;
+  for (const replacement of replacements) {
+    const oldText = replacement?.old;
+    const newText = replacement?.new;
+    if (typeof oldText !== "string" || oldText.length === 0 || typeof newText !== "string") {
+      throw new GateError("Replacement is invalid");
+    }
+    const matches = next.split(oldText).length - 1;
+    if (matches !== 1) {
+      throw new GateError("Replacement must match exactly once");
+    }
+    next = next.replace(oldText, newText);
+  }
+  return next;
+}
+
 export function safePath(filePath) {
   const parsed = path.posix.normalize(filePath);
   if (path.posix.isAbsolute(filePath) || parsed !== filePath || filePath.split("/").includes("..")) {

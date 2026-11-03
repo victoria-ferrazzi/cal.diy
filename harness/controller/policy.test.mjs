@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  applyReplacements,
   canonicalJson,
   codeReviewGate,
   designRequired,
@@ -76,6 +77,19 @@ describe("code review gate", () => {
 
   it("stops when the eval names another commit", () => {
     expect(() => codeReviewGate([plan.files[0]], passingEval("other"), "sha")).toThrow(GateError);
+  });
+});
+
+describe("replacements", () => {
+  it("replaces one exact snippet and rejects a missing or repeated snippet", () => {
+    expect(
+      applyReplacements("fora do horário.", [
+        { old: "fora do horário.", new: "fora do horário, mas não é bloqueada." },
+      ])
+    ).toBe("fora do horário, mas não é bloqueada.");
+    expect(() => applyReplacements("abc", [])).toThrow(GateError);
+    expect(() => applyReplacements("abc abc", [{ old: "abc", new: "x" }])).toThrow(GateError);
+    expect(() => applyReplacements("abc", [{ old: "z", new: "x" }])).toThrow(GateError);
   });
 });
 
