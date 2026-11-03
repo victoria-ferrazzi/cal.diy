@@ -1,5 +1,5 @@
 {
-  "status": "pm",
+  "status": "needs_information",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
@@ -14,7 +14,7 @@
     6594984346,
     6595041532
   ],
-  "updated_at": "2026-11-03T03:56:50.236Z",
+  "updated_at": "2026-11-03T03:56:51.406Z",
   "pm": {
     "summary": "Ajustar o aviso de horário comercial em OutsideBusinessHoursAlert para dizer que a reserva fora do horário não é bloqueada, e remover o trecho 'segunda a sexta, das 9:00 às 18:00' da mensagem outside_business_hours_message. O título e a regra em packages/lib/businessHours.ts não mudam. Não há tela nova. A mensagem vem de packages/i18n/locales/pt, pt-BR e en (common.json), que a issue não lista em Arquivo.",
     "questions": [
