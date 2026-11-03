@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { repoRoot, runAgent } from "./controller/agent.mjs";
 import { createGitHub } from "./controller/github.mjs";
 import {
+  applyReplacements,
   codeReviewGate,
   designRequired,
   digest,
@@ -191,7 +192,9 @@ async function implement(github, bundle, failedChecks) {
   const result = await runAgent(
     [
       "Você é o Implementer. Não grave arquivos no disco. Responda somente com um objeto JSON.",
-      "Campos: summary (string), files (array de {path, content}). content é o arquivo completo.",
+      "Campos: summary (string), files (array de {path, content} ou {path, replacements}).",
+      "Para um arquivo que já existe, use replacements: array de {old, new}. old é o trecho exato e aparece uma vez. Não devolva o arquivo inteiro.",
+      "Para um arquivo novo, use content com o arquivo completo. Cada arquivo traz content ou replacements, nunca os dois.",
       "Altere apenas os caminhos do plano. Siga agents/CONVENTIONS.md: não invente arquivo nem pasta, e aponte para um exemplo existente.",
       `Issue: ${JSON.stringify(bundle.state.issue)}`,
       `Plano: ${JSON.stringify(bundle.state.plan)}`,
@@ -214,13 +217,24 @@ async function implement(github, bundle, failedChecks) {
     git(["checkout", "-B", branch, bundle.state.base_sha]);
   }
   for (const file of result.files) {
-    if (!allowed.has(file.path) || typeof file.content !== "string" || file.content.length > 100000) {
+    if (!allowed.has(file.path)) {
       throw new GateError(`Implementer changed a path outside the plan: ${file.path}`);
     }
     safePath(file.path);
     const destination = path.join(repoRoot, file.path);
+    const hasContent = typeof file.content === "string";
+    const hasReplacements = Array.isArray(file.replacements);
+    if (hasContent === hasReplacements) {
+      throw new GateError(`Implementer must return content or replacements for ${file.path}`);
+    }
+    if (hasContent && file.content.length > 100000) {
+      throw new GateError(`Implementer returned full content for a large file: ${file.path}`);
+    }
+    const content = hasReplacements
+      ? applyReplacements(readFileSync(destination, "utf8"), file.replacements)
+      : file.content;
     mkdirSync(path.dirname(destination), { recursive: true });
-    writeFileSync(destination, file.content.endsWith("\n") ? file.content : `${file.content}\n`);
+    writeFileSync(destination, content.endsWith("\n") ? content : `${content}\n`);
   }
   const evidencePath = path.join(repoRoot, "evidence", "issues", String(issueNumber), "approvals.jsonl");
   mkdirSync(path.dirname(evidencePath), { recursive: true });
@@ -484,6 +498,11 @@ async function approve(github, issueNumber, actor, body, commentId) {
     ids.push(commentId);
     await save(github, bundle, "failed", { clarification_comment_ids: ids });
     await start(github, issueNumber, actor);
+    return;
+  }
+  if (bundle.state.status === "implement") {
+    await comment(github, issueNumber, "A implementação aprovada continua a partir deste comentário.");
+    await implement(github, bundle);
     return;
   }
   if (bundle.state.status === "awaiting_approval") {
