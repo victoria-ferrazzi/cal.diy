@@ -6,6 +6,8 @@ import {
   designRequired,
   digest,
   GateError,
+  issueHints,
+  matchingLines,
   planFingerprint,
   planNeedsApproval,
   safePath,
@@ -90,6 +92,24 @@ describe("replacements", () => {
     expect(() => applyReplacements("abc", [])).toThrow(GateError);
     expect(() => applyReplacements("abc abc", [{ old: "abc", new: "x" }])).toThrow(GateError);
     expect(() => applyReplacements("abc", [{ old: "z", new: "x" }])).toThrow(GateError);
+  });
+});
+
+describe("implementation excerpts", () => {
+  it("keeps the locale line that contains a key named in the issue", () => {
+    const body = 'A chave outside_business_hours_message muda para "não é bloqueada".';
+    const content = [
+      "{",
+      '  "outside_business_hours_title": "Fora do horário comercial",',
+      '  "outside_business_hours_message": "Esta reserva está fora do horário comercial.",',
+      '  "other": "x"',
+      "}",
+    ].join("\n");
+    const hints = issueHints(body);
+    expect(hints).toContain("outside_business_hours_message");
+    expect(matchingLines(content, hints)).toBe(
+      '"outside_business_hours_message": "Esta reserva está fora do horário comercial.",'
+    );
   });
 });
 
