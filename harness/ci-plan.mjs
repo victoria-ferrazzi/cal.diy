@@ -1,3 +1,5 @@
+import process from "node:process";
+
 const body = process.env.PR_BODY ?? "";
 const match = body.match(/<!-- harness-plan\s*([\s\S]*?)\s*-->/);
 

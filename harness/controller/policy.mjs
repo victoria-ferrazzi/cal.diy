@@ -122,7 +122,10 @@ export function deterministicReview(filePaths) {
   for (const filePath of [...new Set(filePaths)].sort()) {
     const parts = filePath.split("/");
     const name = parts.at(-1).toLowerCase();
-    if (parts.some((part) => ["migrations", "migration"].includes(part.toLowerCase())) || name === "schema.prisma") {
+    if (
+      parts.some((part) => ["migrations", "migration"].includes(part.toLowerCase())) ||
+      name === "schema.prisma"
+    ) {
       migrations.push(filePath);
     }
     const coreMatch =

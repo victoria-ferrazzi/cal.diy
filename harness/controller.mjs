@@ -1,15 +1,15 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import process from "node:process";
 import { fileURLToPath } from "node:url";
-
 import { repoRoot, runAgent } from "./agent.mjs";
 import { createGitHub } from "./github.mjs";
 import {
-  GateError,
   codeReviewGate,
   designRequired,
   digest,
+  GateError,
   issueSnapshot,
   planFingerprint,
   planNeedsApproval,
@@ -161,7 +161,12 @@ async function publishPlan(github, bundle, baseSha) {
     );
     return;
   }
-  if (planNeedsApproval(plan.files, bundle.state.issue.body, bundle.state.pm) || evaluation.requires_human || evaluation.risk !== "low" || plan.risk !== "low") {
+  if (
+    planNeedsApproval(plan.files, bundle.state.issue.body, bundle.state.pm) ||
+    evaluation.requires_human ||
+    evaluation.risk !== "low" ||
+    plan.risk !== "low"
+  ) {
     await save(github, bundle, "awaiting_approval", { plan_fingerprint: fingerprint });
     await comment(
       github,
@@ -255,7 +260,11 @@ async function implement(github, bundle, failedChecks) {
     pr_number: prNumber,
     attempts: (bundle.state.attempts ?? 0) + 1,
   });
-  await comment(github, issueNumber, `A PR #${prNumber} está no commit ${headSha}. O Harness CI vai conferir esse SHA.`);
+  await comment(
+    github,
+    issueNumber,
+    `A PR #${prNumber} está no commit ${headSha}. O Harness CI vai conferir esse SHA.`
+  );
   if (process.env.GITHUB_ACTIONS) {
     git(["reset", "--hard"]);
     git(["checkout", "main"]);
@@ -266,12 +275,20 @@ async function reviewCandidate(github, bundle) {
   const headSha = bundle.state.head_sha;
   const check = await github.harnessCheck(headSha);
   if (!check) {
-    await comment(github, bundle.state.issue.number, `O check Harness CI ainda não está visível para ${headSha}.`);
+    await comment(
+      github,
+      bundle.state.issue.number,
+      `O check Harness CI ainda não está visível para ${headSha}.`
+    );
     return;
   }
   if (check.conclusion !== "success") {
     if ((bundle.state.attempts ?? 1) < MAX_IMPLEMENT_ATTEMPTS) {
-      await comment(github, bundle.state.issue.number, "O Harness CI falhou. Vou tentar uma correção no mesmo plano.");
+      await comment(
+        github,
+        bundle.state.issue.number,
+        "O Harness CI falhou. Vou tentar uma correção no mesmo plano."
+      );
       await implement(github, bundle, check);
       return;
     }
@@ -298,7 +315,11 @@ async function reviewCandidate(github, bundle) {
       `Diff: ${diff.slice(0, 20000)}`,
     ].join("\n\n")
   );
-  if (testReview.head_sha !== headSha || testReview.passed !== true || (testReview.findings ?? []).length > 0) {
+  if (
+    testReview.head_sha !== headSha ||
+    testReview.passed !== true ||
+    (testReview.findings ?? []).length > 0
+  ) {
     throw new GateError("Human review cannot bypass the independent test-agent gate");
   }
   const codeEvals = await runAgent(
@@ -328,9 +349,17 @@ async function reviewCandidate(github, bundle) {
       `Diff: ${diff.slice(0, 20000)}`,
     ].join("\n\n")
   );
-  if (review.head_sha !== headSha || review.score < 3 || review.aligned !== true || (review.findings ?? []).length > 0 || review.risk !== "low") {
+  if (
+    review.head_sha !== headSha ||
+    review.score < 3 ||
+    review.aligned !== true ||
+    (review.findings ?? []).length > 0 ||
+    review.risk !== "low"
+  ) {
     gate.requires_human = true;
-    gate.reasons = [...new Set([...gate.reasons, "O Reviewer não confirmou alinhamento suficiente com o pedido."])];
+    gate.reasons = [
+      ...new Set([...gate.reasons, "O Reviewer não confirmou alinhamento suficiente com o pedido."]),
+    ];
   }
   await save(github, bundle, gate.requires_human ? "awaiting_code_review" : "ready_to_merge", {
     code_evals: codeEvals,
@@ -420,7 +449,11 @@ async function start(github, issueNumber, actor) {
   await save(github, bundle, null, { ambiguity });
   if (ambiguity.score >= 2) {
     await save(github, bundle, "needs_information");
-    await comment(github, issueNumber, ambiguity.summary || "A issue precisa de esclarecimento antes do plano.");
+    await comment(
+      github,
+      issueNumber,
+      ambiguity.summary || "A issue precisa de esclarecimento antes do plano."
+    );
     return;
   }
   if (designRequired(issue.body, pm, null)) {
@@ -474,7 +507,11 @@ async function approve(github, issueNumber, actor, body, commentId) {
     await save(github, bundle, "ready_to_merge", {
       code_approval: { actor, head_sha: bundle.state.head_sha, comment_id: commentId },
     });
-    await comment(github, issueNumber, `Aprovação registrada para ${bundle.state.head_sha}. Pode fazer o merge da PR #${bundle.state.pr_number}.`);
+    await comment(
+      github,
+      issueNumber,
+      `Aprovação registrada para ${bundle.state.head_sha}. Pode fazer o merge da PR #${bundle.state.pr_number}.`
+    );
   }
 }
 
@@ -535,7 +572,11 @@ async function verifyPublished(github, pull) {
   const publish = { head_sha: mergeSha, passed, findings };
   if (passed && mergeSha === pull.merge_commit_sha) {
     await save(github, loaded, "done", { merge_sha: mergeSha, publish });
-    await comment(github, issueNumber, `A versão publicada ${mergeSha} passou no aceite. A tarefa está concluída.`);
+    await comment(
+      github,
+      issueNumber,
+      `A versão publicada ${mergeSha} passou no aceite. A tarefa está concluída.`
+    );
     return;
   }
   await save(github, loaded, "failed", { merge_sha: mergeSha, publish });
@@ -570,7 +611,13 @@ async function main() {
       return;
     }
     if (name === "issue_comment" && payload.action === "created" && payload.sender?.type === "User") {
-      await approve(github, payload.issue.number, payload.sender.login, payload.comment.body, payload.comment.id);
+      await approve(
+        github,
+        payload.issue.number,
+        payload.sender.login,
+        payload.comment.body,
+        payload.comment.id
+      );
       return;
     }
     if (name === "workflow_run" && payload.workflow_run?.conclusion === "success") {

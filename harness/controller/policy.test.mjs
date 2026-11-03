@@ -1,18 +1,20 @@
 import { describe, expect, it } from "vitest";
-
 import {
-  GateError,
   canonicalJson,
   codeReviewGate,
   designRequired,
   digest,
+  GateError,
   planFingerprint,
   planNeedsApproval,
   safePath,
 } from "./policy.mjs";
 
 const issue = { number: 10, title: "Aviso", body: "Pedido de aprovação do plano.\nNão há tela nova." };
-const plan = { files: ["apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx"], acceptance: ["texto"] };
+const plan = {
+  files: ["apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx"],
+  acceptance: ["texto"],
+};
 const evaluation = { aligned: true, score: 3, missing_acceptance_criteria: [] };
 
 function passingEval(headSha) {
@@ -42,12 +44,18 @@ describe("plan fingerprint", () => {
 
 describe("approval routing", () => {
   it("requires plan approval when the issue asks for it and skips design when there is no new screen", () => {
-    expect(planNeedsApproval(plan.files, issue.body, { complexity: "simple", scope_type: "change" })).toBe(true);
-    expect(designRequired(issue.body, { scope_type: "screen" }, { needed: true, confidence: 0.2 })).toBe(false);
+    expect(planNeedsApproval(plan.files, issue.body, { complexity: "simple", scope_type: "change" })).toBe(
+      true
+    );
+    expect(designRequired(issue.body, { scope_type: "screen" }, { needed: true, confidence: 0.2 })).toBe(
+      false
+    );
   });
 
   it("holds a human-risk path even without the issue phrase", () => {
-    expect(planNeedsApproval(["packages/features/auth/lib/next-auth-options.ts"], "Mudança pequena.", {})).toBe(true);
+    expect(
+      planNeedsApproval(["packages/features/auth/lib/next-auth-options.ts"], "Mudança pequena.", {})
+    ).toBe(true);
   });
 });
 
@@ -58,7 +66,9 @@ describe("code review gate", () => {
   });
 
   it("requires a person for a core file and for medium complexity", () => {
-    expect(codeReviewGate(["packages/lib/businessHours.ts"], passingEval("sha"), "sha").requires_human).toBe(true);
+    expect(codeReviewGate(["packages/lib/businessHours.ts"], passingEval("sha"), "sha").requires_human).toBe(
+      true
+    );
     const medium = passingEval("sha");
     medium.complexity.level = "medium";
     expect(codeReviewGate([plan.files[0]], medium, "sha").requires_human).toBe(true);

@@ -1,3 +1,4 @@
+import process from "node:process";
 export function createGitHub(env = process.env) {
   const token = env.GITHUB_TOKEN;
   const repository = env.GITHUB_REPOSITORY;
@@ -32,7 +33,9 @@ export function createGitHub(env = process.env) {
       return null;
     }
     if (status < 200 || status >= 300) {
-      throw new Error(`GitHub ${options?.method ?? "GET"} ${pathname} failed (${status}): ${text.slice(0, 400)}`);
+      throw new Error(
+        `GitHub ${options?.method ?? "GET"} ${pathname} failed (${status}): ${text.slice(0, 400)}`
+      );
     }
     return data;
   }
@@ -114,7 +117,9 @@ export function createGitHub(env = process.env) {
       const data = await api(
         `/repos/${repository}/commits/${sha}/check-runs?check_name=${encodeURIComponent("Harness CI")}&per_page=20`
       );
-      const run = (data?.check_runs ?? []).find((item) => item.name === "Harness CI" || item.name.endsWith("/ Harness CI"));
+      const run = (data?.check_runs ?? []).find(
+        (item) => item.name === "Harness CI" || item.name.endsWith("/ Harness CI")
+      );
       if (!run) {
         return null;
       }
@@ -122,7 +127,9 @@ export function createGitHub(env = process.env) {
       return {
         conclusion: run.conclusion,
         url: run.html_url,
-        annotations: Array.isArray(annotations) ? annotations.map((item) => item.message).filter(Boolean) : [],
+        annotations: Array.isArray(annotations)
+          ? annotations.map((item) => item.message).filter(Boolean)
+          : [],
       };
     },
     async pullsForCommit(sha) {

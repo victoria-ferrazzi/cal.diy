@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
+import process from "node:process";
 import { fileURLToPath } from "node:url";
-
 import { GateError } from "./policy.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
@@ -69,7 +69,10 @@ export function parseAgentStdout(stdout) {
   return value;
 }
 
-export function runAgent(prompt, { timeoutMs = 180000, binary = process.env.CURSOR_AGENT || "cursor-agent" } = {}) {
+export function runAgent(
+  prompt,
+  { timeoutMs = 180000, binary = process.env.CURSOR_AGENT || "cursor-agent" } = {}
+) {
   return new Promise((resolve, reject) => {
     const child = spawn(binary, ["-p", "--trust", "--output-format", "json", prompt], {
       cwd: repoRoot,
