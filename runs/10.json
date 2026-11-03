@@ -1,5 +1,5 @@
 {
-  "status": "pm",
+  "status": "evaluate",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
@@ -15,7 +15,7 @@
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T04:01:38.955Z",
+  "updated_at": "2026-11-03T04:03:40.822Z",
   "pm": {
     "summary": "Ajustar só a cópia do aviso de horário comercial: a mensagem passa a dizer que a reserva continua possível e deixa de mostrar o intervalo (segunda a sexta, 9:00–18:00). O título permanece, o aviso continua só quando isOutsideBusinessHours é verdadeiro e a regra em businessHours.ts não muda. Escopo: OutsideBusinessHoursAlert.tsx e os common.json de pt, pt-BR e en.",
     "questions": [],
@@ -26,5 +26,32 @@
   "ambiguity": {
     "score": 0,
     "summary": "Objetivo, escopo, aceite e textos estão definidos. A seção Decisão resolve a remoção do intervalo e mantém o título. O aceite não cita que o aviso exige timeZone (regra já documentada em agents/PRODUCT.md e sem mudança). A linha de aprovação do plano é um passo de processo, não uma lacuna de especificação."
+  },
+  "plan": {
+    "summary": "Trocar só a cópia de outside_business_hours_message nos common.json de pt, pt-BR e en para o texto que diz que a reserva não é bloqueada, removendo o intervalo (segunda a sexta, 9:00–18:00). O título outside_business_hours_title permanece. OutsideBusinessHoursAlert.tsx já retorna null sem timeZone e só renderiza o Alert quando isOutsideBusinessHours é verdadeiro para algum range; não alterar essa lógica nem packages/lib/businessHours.ts. Acrescentar um vitest ao lado do componente, no estilo de apps/web/modules/users/components/AdminPasswordBanner.test.tsx, que lê os três common.json e renderiza o aviso.",
+    "files": [
+      "packages/i18n/locales/pt/common.json",
+      "packages/i18n/locales/pt-BR/common.json",
+      "packages/i18n/locales/en/common.json",
+      "apps/web/modules/bookings/components/OutsideBusinessHoursAlert.test.tsx"
+    ],
+    "tests": [
+      {
+        "path": "apps/web/modules/bookings/components/OutsideBusinessHoursAlert.test.tsx",
+        "kind": "vitest"
+      }
+    ],
+    "acceptance": [
+      "outside_business_hours_message em pt e pt-BR fica exatamente \"Esta reserva está fora do horário comercial, mas não é bloqueada.\"",
+      "outside_business_hours_message em en fica exatamente \"This booking is outside business hours, but it is not blocked.\"",
+      "A mensagem deixa de incluir o intervalo (segunda a sexta, das 9:00 às 18:00 / Monday to Friday, 9:00–18:00).",
+      "outside_business_hours_title permanece \"Fora do horário comercial\" em pt e pt-BR e \"Outside business hours\" em en.",
+      "O aviso com data-testid outside-business-hours-warning só aparece quando isOutsideBusinessHours é verdadeiro; sem timeZone ou com intervalo dentro do horário (segunda 10:00–11:00 em America/Sao_Paulo) não renderiza.",
+      "packages/lib/businessHours.ts e packages/lib/businessHours.test.ts permanecem iguais.",
+      "Não há tela nova nem mudança de severity, título visual ou layout do Alert.",
+      "yarn vitest run apps/web/modules/bookings/components/OutsideBusinessHoursAlert.test.tsx passa."
+    ],
+    "open_questions": [],
+    "risk": "low"
   }
 }
