@@ -12,5 +12,14 @@
   "clarification_comment_ids": [
     6594930679
   ],
-  "updated_at": "2026-11-03T03:47:18.423Z"
+  "updated_at": "2026-11-03T03:47:33.814Z",
+  "pm": {
+    "summary": "Ajustar o aviso OutsideBusinessHoursAlert em apps/web/modules/bookings/components para dizer que a reserva continua possível fora do horário comercial. O aviso deve aparecer só quando isOutsideBusinessHours for verdadeiro, e a regra em packages/lib/businessHours.ts não muda. Não há tela nova nem decisão de design.",
+    "questions": [
+      "Qual é o texto exato do aviso, ou a equipe de produto aceita a redação proposta na implementação?"
+    ],
+    "scope_type": "change",
+    "complexity": "simple",
+    "requires_plan_approval": true
+  }
 }
