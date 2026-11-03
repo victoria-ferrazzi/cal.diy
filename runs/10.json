@@ -15,12 +15,16 @@
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T04:01:05.740Z",
+  "updated_at": "2026-11-03T04:01:38.955Z",
   "pm": {
     "summary": "Ajustar só a cópia do aviso de horário comercial: a mensagem passa a dizer que a reserva continua possível e deixa de mostrar o intervalo (segunda a sexta, 9:00–18:00). O título permanece, o aviso continua só quando isOutsideBusinessHours é verdadeiro e a regra em businessHours.ts não muda. Escopo: OutsideBusinessHoursAlert.tsx e os common.json de pt, pt-BR e en.",
     "questions": [],
     "scope_type": "change",
     "complexity": "simple",
     "requires_plan_approval": true
+  },
+  "ambiguity": {
+    "score": 0,
+    "summary": "Objetivo, escopo, aceite e textos estão definidos. A seção Decisão resolve a remoção do intervalo e mantém o título. O aceite não cita que o aviso exige timeZone (regra já documentada em agents/PRODUCT.md e sem mudança). A linha de aprovação do plano é um passo de processo, não uma lacuna de especificação."
   }
 }
