@@ -1,5 +1,5 @@
 {
-  "status": "pm",
+  "status": "needs_information",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
@@ -10,7 +10,7 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-03T03:43:45.269Z",
+  "updated_at": "2026-11-03T03:43:46.298Z",
   "pm": {
     "summary": "Ajustar o texto do aviso existente em OutsideBusinessHoursAlert para deixar explícito que a reserva continua possível fora do horário comercial. O aviso segue aparecendo só quando isOutsideBusinessHours é verdadeiro, e a regra em businessHours.ts permanece igual. Não há tela nova nem escolha de design.",
     "questions": [],
