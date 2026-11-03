@@ -1,11 +1,11 @@
 {
-  "status": "failed",
+  "status": "pm",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
-    "body": "## Objetivo\n\nO aviso de horário comercial deixa explícito que a reserva continua possível fora do horário.\n\n## Arquivo\n\n- `apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx`\n\n## Aceite\n\n- O aviso aparece somente quando `isOutsideBusinessHours` é verdadeiro.\n- O texto diz que a reserva não é bloqueada.\n- A regra em `packages/lib/businessHours.ts` permanece igual.\n- Não há tela nova nem escolha de design.\n\n## Plano\n\nPedir aprovação do plano antes da implementação.\n\n## Textos\npt e pt-BR: \"Esta reserva está fora do horário comercial, mas não é bloqueada.\"\nen: \"This booking is outside business hours, but it is not blocked.\"\n\n## Decisão\nA mensagem outside_business_hours_message fica exatamente com os textos da seção Textos. O trecho do intervalo (segunda a sexta, das 9:00 às 18:00 / Monday to Friday, 9:00–18:00) sai.\nO título outside_business_hours_title permanece: \"Fora do horário comercial\" em pt e pt-BR, e \"Outside business hours\" em en."
+    "body": "## Objetivo\n\nO aviso de horário comercial deixa explícito que a reserva continua possível fora do horário.\n\n## Arquivo\n\n- `apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx`\n\n## Aceite\n\n- O aviso aparece somente quando `isOutsideBusinessHours` é verdadeiro.\n- O texto diz que a reserva não é bloqueada.\n- A regra em `packages/lib/businessHours.ts` permanece igual.\n- Não há tela nova nem escolha de design.\n\n## Plano\n\nPedir aprovação do plano antes da implementação.\n\n## Textos\npt e pt-BR: \"Esta reserva está fora do horário comercial, mas não é bloqueada.\"\nen: \"This booking is outside business hours, but it is not blocked.\"\n\n## Decisão\nA mensagem outside_business_hours_message fica exatamente com os textos da seção Textos. O trecho do intervalo (segunda a sexta, das 9:00 às 18:00 / Monday to Friday, 9:00–18:00) sai.\nO título outside_business_hours_title permanece: \"Fora do horário comercial\" em pt e pt-BR, e \"Outside business hours\" em en.\n\n## Escopo\nSim. Além de apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx, estes arquivos entram no escopo:\n- packages/i18n/locales/pt/common.json\n- packages/i18n/locales/pt-BR/common.json\n- packages/i18n/locales/en/common.json\n\nA remoção do intervalo é intencional. O aviso não mostra o horário comercial. A mensagem fica só com o texto da seção Textos."
   },
-  "issue_digest": "3831e167e02e17f4b19855d1d4c46578c80552a0d07a96fd9fecbbde22fd8bb4",
+  "issue_digest": "7d1ea97200eb5b6aa579505a30188f5b6b994a55ca64afb23291b98917901476",
   "base_sha": "0e5db5ece98c45b4a61bd25e6e68d33786a36ea7",
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
@@ -15,15 +15,5 @@
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T04:00:20.180Z",
-  "pm": {
-    "summary": "Ajustar o aviso de horário comercial em OutsideBusinessHoursAlert para dizer que a reserva fora do horário não é bloqueada, e remover o trecho 'segunda a sexta, das 9:00 às 18:00' da mensagem outside_business_hours_message. O título e a regra em packages/lib/businessHours.ts não mudam. Não há tela nova. A mensagem vem de packages/i18n/locales/pt, pt-BR e en (common.json), que a issue não lista em Arquivo.",
-    "questions": [
-      "A issue lista só OutsideBusinessHoursAlert.tsx em Arquivo, mas a mensagem está em packages/i18n/locales/pt/common.json, pt-BR/common.json e en/common.json. Confirmar que esses três arquivos entram no escopo.",
-      "Ao remover o intervalo, o aviso deixa de mostrar o horário comercial. Confirmar que essa remoção é intencional, já que a issue a registra como decisão."
-    ],
-    "scope_type": "change",
-    "complexity": "simple",
-    "requires_plan_approval": true
-  }
+  "updated_at": "2026-11-03T04:00:22.201Z"
 }
