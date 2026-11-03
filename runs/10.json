@@ -14,5 +14,15 @@
     6594984346,
     6595041532
   ],
-  "updated_at": "2026-11-03T03:56:07.750Z"
+  "updated_at": "2026-11-03T03:56:50.236Z",
+  "pm": {
+    "summary": "Ajustar o aviso de horário comercial em OutsideBusinessHoursAlert para dizer que a reserva fora do horário não é bloqueada, e remover o trecho 'segunda a sexta, das 9:00 às 18:00' da mensagem outside_business_hours_message. O título e a regra em packages/lib/businessHours.ts não mudam. Não há tela nova. A mensagem vem de packages/i18n/locales/pt, pt-BR e en (common.json), que a issue não lista em Arquivo.",
+    "questions": [
+      "A issue lista só OutsideBusinessHoursAlert.tsx em Arquivo, mas a mensagem está em packages/i18n/locales/pt/common.json, pt-BR/common.json e en/common.json. Confirmar que esses três arquivos entram no escopo.",
+      "Ao remover o intervalo, o aviso deixa de mostrar o horário comercial. Confirmar que essa remoção é intencional, já que a issue a registra como decisão."
+    ],
+    "scope_type": "change",
+    "complexity": "simple",
+    "requires_plan_approval": true
+  }
 }
