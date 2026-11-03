@@ -1,5 +1,5 @@
 {
-  "status": "implement",
+  "status": "awaiting_ci",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
@@ -8,14 +8,14 @@
   "issue_digest": "7d1ea97200eb5b6aa579505a30188f5b6b994a55ca64afb23291b98917901476",
   "base_sha": "0e5db5ece98c45b4a61bd25e6e68d33786a36ea7",
   "started_by": "victoria-ferrazzi",
-  "attempts": 0,
+  "attempts": 1,
   "clarification_comment_ids": [
     6594930679,
     6594984346,
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T04:05:51.239Z",
+  "updated_at": "2026-11-03T05:04:13.192Z",
   "pm": {
     "summary": "Ajustar só a cópia do aviso de horário comercial: a mensagem passa a dizer que a reserva continua possível e deixa de mostrar o intervalo (segunda a sexta, 9:00–18:00). O título permanece, o aviso continua só quando isOutsideBusinessHours é verdadeiro e a regra em businessHours.ts não muda. Escopo: OutsideBusinessHoursAlert.tsx e os common.json de pt, pt-BR e en.",
     "questions": [],
@@ -67,5 +67,8 @@
     "actor": "victoria-ferrazzi",
     "fingerprint": "0da17dfe58b0e6d32fce01079634902afdfbe6317017d1306b81434ecd9571de",
     "comment_id": 6595166748
-  }
+  },
+  "head_sha": "21805649481321a600fcec9b2a9f22a369a3d359",
+  "branch": "harness/issue-10",
+  "pr_number": 15
 }
