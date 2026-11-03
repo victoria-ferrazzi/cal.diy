@@ -6,7 +6,7 @@
     "body": "## Objetivo\n\nO aviso de horário comercial deixa explícito que a reserva continua possível fora do horário.\n\n## Arquivo\n\n- `apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx`\n\n## Aceite\n\n- O aviso aparece somente quando `isOutsideBusinessHours` é verdadeiro.\n- O texto diz que a reserva não é bloqueada.\n- A regra em `packages/lib/businessHours.ts` permanece igual.\n- Não há tela nova nem escolha de design.\n\n## Plano\n\nPedir aprovação do plano antes da implementação.\n\n## Textos\npt e pt-BR: \"Esta reserva está fora do horário comercial, mas não é bloqueada.\"\nen: \"This booking is outside business hours, but it is not blocked.\"\n\n## Decisão\nA mensagem outside_business_hours_message fica exatamente com os textos da seção Textos. O trecho do intervalo (segunda a sexta, das 9:00 às 18:00 / Monday to Friday, 9:00–18:00) sai.\nO título outside_business_hours_title permanece: \"Fora do horário comercial\" em pt e pt-BR, e \"Outside business hours\" em en.\n\n## Escopo\nSim. Além de apps/web/modules/bookings/components/OutsideBusinessHoursAlert.tsx, estes arquivos entram no escopo:\n- packages/i18n/locales/pt/common.json\n- packages/i18n/locales/pt-BR/common.json\n- packages/i18n/locales/en/common.json\n\nA remoção do intervalo é intencional. O aviso não mostra o horário comercial. A mensagem fica só com o texto da seção Textos."
   },
   "issue_digest": "7d1ea97200eb5b6aa579505a30188f5b6b994a55ca64afb23291b98917901476",
-  "base_sha": "0e5db5ece98c45b4a61bd25e6e68d33786a36ea7",
+  "base_sha": "1f740dcb2e5139e3bf7fba605a1ba67ea6b74618",
   "started_by": "victoria-ferrazzi",
   "attempts": 1,
   "clarification_comment_ids": [
@@ -15,7 +15,7 @@
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T05:11:04.913Z",
+  "updated_at": "2026-11-03T05:24:47.259Z",
   "pm": {
     "summary": "Ajustar só a cópia do aviso de horário comercial: a mensagem passa a dizer que a reserva continua possível e deixa de mostrar o intervalo (segunda a sexta, 9:00–18:00). O título permanece, o aviso continua só quando isOutsideBusinessHours é verdadeiro e a regra em businessHours.ts não muda. Escopo: OutsideBusinessHoursAlert.tsx e os common.json de pt, pt-BR e en.",
     "questions": [],
