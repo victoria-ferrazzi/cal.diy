@@ -1,5 +1,5 @@
 {
-  "status": "evaluate",
+  "status": "awaiting_approval",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
@@ -15,7 +15,7 @@
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T04:05:05.399Z",
+  "updated_at": "2026-11-03T04:05:06.444Z",
   "pm": {
     "summary": "Ajustar só a cópia do aviso de horário comercial: a mensagem passa a dizer que a reserva continua possível e deixa de mostrar o intervalo (segunda a sexta, 9:00–18:00). O título permanece, o aviso continua só quando isOutsideBusinessHours é verdadeiro e a regra em businessHours.ts não muda. Escopo: OutsideBusinessHoursAlert.tsx e os common.json de pt, pt-BR e en.",
     "questions": [],
@@ -61,5 +61,6 @@
     "risk": "low",
     "requires_human": false,
     "summary": "O plano cobre os quatro aceites: o aviso continua só quando isOutsideBusinessHours é verdadeiro, a mensagem fica exatamente com os textos que dizem que a reserva não é bloqueada, businessHours.ts permanece igual e não há tela nova nem escolha de design. O vitest novo apenas confere essa cópia e a renderização já existente."
-  }
+  },
+  "plan_fingerprint": "0da17dfe58b0e6d32fce01079634902afdfbe6317017d1306b81434ecd9571de"
 }
