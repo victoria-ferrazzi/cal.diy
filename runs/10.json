@@ -1,5 +1,5 @@
 {
-  "status": "awaiting_ci",
+  "status": "ready_to_merge",
   "issue": {
     "number": 10,
     "title": "Ajustar aviso de horário comercial para deixar claro que a reserva continua possível",
@@ -15,7 +15,7 @@
     6595041532,
     6595094901
   ],
-  "updated_at": "2026-11-03T05:24:47.259Z",
+  "updated_at": "2026-11-10T03:29:36.700Z",
   "pm": {
     "summary": "Ajustar só a cópia do aviso de horário comercial: a mensagem passa a dizer que a reserva continua possível e deixa de mostrar o intervalo (segunda a sexta, 9:00–18:00). O título permanece, o aviso continua só quando isOutsideBusinessHours é verdadeiro e a regra em businessHours.ts não muda. Escopo: OutsideBusinessHoursAlert.tsx e os common.json de pt, pt-BR e en.",
     "questions": [],
@@ -70,5 +70,42 @@
   },
   "head_sha": "7e435b656dd7455ff22ae5d40311c4ff95267d68",
   "branch": "harness/issue-10",
-  "pr_number": 15
+  "pr_number": 15,
+  "code_evals": {
+    "head_sha": "7e435b656dd7455ff22ae5d40311c4ff95267d68",
+    "complexity": {
+      "level": "low"
+    },
+    "plan_adherence": {
+      "passed": true,
+      "score": 3,
+      "findings": []
+    },
+    "style": {
+      "passed": true,
+      "findings": []
+    },
+    "human_review": {
+      "required": false,
+      "reasons": []
+    }
+  },
+  "review": {
+    "head_sha": "7e435b656dd7455ff22ae5d40311c4ff95267d68",
+    "score": 3,
+    "aligned": true,
+    "findings": [],
+    "risk": "low",
+    "summary": "O diff troca só outside_business_hours_message em pt, pt-BR e en para o texto de que a reserva não é bloqueada, tira o intervalo e mantém o título. O vitest novo cobre essas cópias e a renderização do aviso (sem fuso, segunda 10:00–11:00 em America/Sao_Paulo e um intervalo fora do horário). businessHours.ts e OutsideBusinessHoursAlert.tsx não mudam."
+  },
+  "code_gate": {
+    "head_sha": "7e435b656dd7455ff22ae5d40311c4ff95267d68",
+    "requires_human": false,
+    "reasons": [],
+    "deterministic_checks": {
+      "migration_files": [],
+      "core_files": [],
+      "requires_human": false
+    }
+  }
 }
