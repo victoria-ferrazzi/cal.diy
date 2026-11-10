@@ -10,5 +10,12 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T22:32:29.378Z"
+  "updated_at": "2026-11-10T22:34:01.173Z",
+  "pm": {
+    "summary": "Substituir spread de Set por Array.from em packages/lib/shortBreak.ts para resolver o erro TS2802 com target ES5 e adicionar teste de deduplicação de intervalo.",
+    "questions": [],
+    "scope_type": "change",
+    "complexity": "simple",
+    "requires_plan_approval": true
+  }
 }
