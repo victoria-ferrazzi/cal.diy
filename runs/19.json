@@ -1,5 +1,5 @@
 {
-  "status": "implement",
+  "status": "awaiting_ci",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
@@ -8,9 +8,9 @@
   "issue_digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
   "base_sha": "780d7b598271e0a0e75e2fc475276e6b81c70c2f",
   "started_by": "victoria-ferrazzi",
-  "attempts": 0,
+  "attempts": 1,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T21:45:40.473Z",
+  "updated_at": "2026-11-10T21:48:36.206Z",
   "pm": {
     "summary": "Trocar o spread de Set por Array.from em packages/lib/shortBreak.ts (return [...marked]) para corrigir o TS2802 com target es5, sem alterar a lógica de idsWithShortBreak. Adicionar um teste confirmando que um span com dois intervalos curtos aparece uma única vez no resultado. Fora de escopo: tsconfigs, SHORT_BREAK_MINUTES, a regra de intervalo, a assinatura, GHSA-xv26-6w52-cph6, businessHours.ts e harness/CHECKS.md.",
     "questions": [],
@@ -63,5 +63,8 @@
     "actor": "victoria-ferrazzi",
     "fingerprint": "ef6680613a3ca689387c4e623cdb2a29bf71e606f1584ccbdb4a703cb1c9d509",
     "comment_id": 6780082890
-  }
+  },
+  "head_sha": "b1225c25e6709fd337d22b2e96d8ab5d6c744a57",
+  "branch": "harness/issue-19",
+  "pr_number": 21
 }
