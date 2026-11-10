@@ -1,0 +1,14 @@
+{
+  "status": "pm",
+  "issue": {
+    "number": 19,
+    "title": "fix(lib): use Array.from for short break ids",
+    "body": "## Objetivo\n\nTrocar o spread de `Set` em `packages/lib/shortBreak.ts` por `Array.from`, para que o type-check passe com o target es5 do `packages/tsconfig/nextjs.json`. A falha está registrada em `harness/CHECKS.md` (TS2802 na linha `return [...marked];`).\n\nO comportamento de `idsWithShortBreak` não muda.\n\n## Critérios de aceite\n\n1. `packages/lib/shortBreak.ts` retorna `Array.from(marked)` no lugar de `[...marked]`, sem outra alteração de lógica.\n2. `corepack yarn vitest run packages/lib/shortBreak.test.ts` passa com os testes que já existem.\n3. `packages/lib/shortBreak.test.ts` ganha um teste que confirma que um span com dois intervalos curtos aparece uma única vez no resultado.\n4. `corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts` não tem erro.\n5. Um `tsc --noEmit --target es5 --lib es2015,dom` mínimo sobre `packages/lib/shortBreak.ts` deixa de acusar TS2802.\n6. `harness/CHECKS.md` deixa de listar o TS2802 como falha conhecida.\n\n## Fora de escopo\n\n- Alterar `packages/tsconfig/nextjs.json`, `apps/web/tsconfig.json` ou qualquer outro tsconfig.\n- Alterar `SHORT_BREAK_MINUTES`, a regra de intervalo ou a assinatura de `idsWithShortBreak`.\n- Alterar a auditoria `GHSA-xv26-6w52-cph6`.\n- Alterar `packages/lib/businessHours.ts`.\n\n## Gates do harness\n\n- H1: o controller para com o digest dos requisitos. Um comentário com o digest libera o plano.\n- H2: o plano é publicado com o fingerprint, e a aprovação é um comentário com esse fingerprint.\n- H3: revisão de código do commit candidato, com a verificação humana se o gate pedir.\n- H4: merge manual depois do comentário de que os gates passaram.\n"
+  },
+  "issue_digest": "a6f51585948f6ebe16fd15b48b69fa59a6aff00b60726df75d6dc1d59c20760f",
+  "base_sha": "586a57806427a62b3e13befbccb11238e5cd24f7",
+  "started_by": "victoria-ferrazzi",
+  "attempts": 0,
+  "clarification_comment_ids": [],
+  "updated_at": "2026-11-10T12:29:16.594Z"
+}
