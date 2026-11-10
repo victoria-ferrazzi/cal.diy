@@ -1,18 +1,18 @@
 {
-  "status": "plan",
+  "status": "failed",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
-    "body": "## Objetivo\n\nTrocar o spread de `Set` em `packages/lib/shortBreak.ts` por `Array.from`, para que o type-check passe com o target es5 do `packages/tsconfig/nextjs.json`. A falha está registrada em `harness/CHECKS.md` (TS2802 na linha `return [...marked];`).\n\nO comportamento de `idsWithShortBreak` não muda.\n\n## Critérios de aceite\n\n1. `packages/lib/shortBreak.ts` retorna `Array.from(marked)` no lugar de `[...marked]`, sem outra alteração de lógica.\n2. `corepack yarn vitest run packages/lib/shortBreak.test.ts` passa com os testes que já existem.\n3. `packages/lib/shortBreak.test.ts` ganha um teste que confirma que um span com dois intervalos curtos aparece uma única vez no resultado.\n4. `corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts` não tem erro.\n5. Um `tsc --noEmit --target es5 --lib es2015,dom` mínimo sobre `packages/lib/shortBreak.ts` deixa de acusar TS2802.\n6. `harness/CHECKS.md` deixa de listar o TS2802 como falha conhecida.\n\n## Fora de escopo\n\n- Alterar `packages/tsconfig/nextjs.json`, `apps/web/tsconfig.json` ou qualquer outro tsconfig.\n- Alterar `SHORT_BREAK_MINUTES`, a regra de intervalo ou a assinatura de `idsWithShortBreak`.\n- Alterar a auditoria `GHSA-xv26-6w52-cph6`.\n- Alterar `packages/lib/businessHours.ts`.\n\n## Gates do harness\n\n- H1: o controller para com o digest dos requisitos. Um comentário com o digest libera o plano.\n- H2: o plano é publicado com o fingerprint, e a aprovação é um comentário com esse fingerprint.\n- H3: revisão de código do commit candidato, com a verificação humana se o gate pedir.\n- H4: merge manual depois do comentário de que os gates passaram.\n"
+    "body": "## Objetivo\n\nTrocar o spread de `Set` em `packages/lib/shortBreak.ts` por `Array.from`, para que o type-check passe com o target es5 do `packages/tsconfig/nextjs.json`. A falha est\u00e1 registrada em `harness/CHECKS.md` (TS2802 na linha `return [...marked];`).\n\nO comportamento de `idsWithShortBreak` n\u00e3o muda.\n\n## Crit\u00e9rios de aceite\n\n1. `packages/lib/shortBreak.ts` retorna `Array.from(marked)` no lugar de `[...marked]`, sem outra altera\u00e7\u00e3o de l\u00f3gica.\n2. `corepack yarn vitest run packages/lib/shortBreak.test.ts` passa com os testes que j\u00e1 existem.\n3. `packages/lib/shortBreak.test.ts` ganha um teste que confirma que um span com dois intervalos curtos aparece uma \u00fanica vez no resultado.\n4. `corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts` n\u00e3o tem erro.\n5. Um `tsc --noEmit --target es5 --lib es2015,dom` m\u00ednimo sobre `packages/lib/shortBreak.ts` deixa de acusar TS2802.\n6. `harness/CHECKS.md` deixa de listar o TS2802 como falha conhecida.\n\n## Fora de escopo\n\n- Alterar `packages/tsconfig/nextjs.json`, `apps/web/tsconfig.json` ou qualquer outro tsconfig.\n- Alterar `SHORT_BREAK_MINUTES`, a regra de intervalo ou a assinatura de `idsWithShortBreak`.\n- Alterar a auditoria `GHSA-xv26-6w52-cph6`.\n- Alterar `packages/lib/businessHours.ts`.\n\n## Gates do harness\n\n- H1: o controller para com o digest dos requisitos. Um coment\u00e1rio com o digest libera o plano.\n- H2: o plano \u00e9 publicado com o fingerprint, e a aprova\u00e7\u00e3o \u00e9 um coment\u00e1rio com esse fingerprint.\n- H3: revis\u00e3o de c\u00f3digo do commit candidato, com a verifica\u00e7\u00e3o humana se o gate pedir.\n- H4: merge manual depois do coment\u00e1rio de que os gates passaram.\n"
   },
   "issue_digest": "a6f51585948f6ebe16fd15b48b69fa59a6aff00b60726df75d6dc1d59c20760f",
   "base_sha": "780d7b598271e0a0e75e2fc475276e6b81c70c2f",
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T21:25:05.766Z",
+  "updated_at": "2026-11-10T21:35:00.000Z",
   "pm": {
-    "summary": "Trocar o spread de Set (`[...marked]`) por `Array.from(marked)` em `packages/lib/shortBreak.ts` para corrigir o TS2802 com o target es5. Adicionar um teste de span com dois intervalos curtos e atualizar `harness/CHECKS.md`. Sem mudança de lógica, regra de horário ou tsconfig.",
+    "summary": "Trocar o spread de Set (`[...marked]`) por `Array.from(marked)` em `packages/lib/shortBreak.ts` para corrigir o TS2802 com o target es5. Adicionar um teste de span com dois intervalos curtos e atualizar `harness/CHECKS.md`. Sem mudan\u00e7a de l\u00f3gica, regra de hor\u00e1rio ou tsconfig.",
     "questions": [],
     "scope_type": "change",
     "complexity": "simple",
@@ -20,7 +20,7 @@
   },
   "ambiguity": {
     "score": 0,
-    "summary": "Objetivo, escopo e critérios de aceite estão definidos. A troca de `[...marked]` por `Array.from(marked)` é única e verificável. `packages/tsconfig/nextjs.json` inclui `esnext` em `lib`, então `Array.from` tem tipagem. O TS2802 está registrado em `harness/CHECKS.md` na linha 30 de `shortBreak.ts`. Não há decisão de produto em aberto."
+    "summary": "Objetivo, escopo e crit\u00e9rios de aceite est\u00e3o definidos. A troca de `[...marked]` por `Array.from(marked)` \u00e9 \u00fanica e verific\u00e1vel. `packages/tsconfig/nextjs.json` inclui `esnext` em `lib`, ent\u00e3o `Array.from` tem tipagem. O TS2802 est\u00e1 registrado em `harness/CHECKS.md` na linha 30 de `shortBreak.ts`. N\u00e3o h\u00e1 decis\u00e3o de produto em aberto."
   },
   "requirements_digest": "a6f51585948f6ebe16fd15b48b69fa59a6aff00b60726df75d6dc1d59c20760f",
   "requirements_approval": {
