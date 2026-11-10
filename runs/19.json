@@ -1,18 +1,18 @@
 {
-  "status": "awaiting_ci",
+  "status": "failed",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
-    "body": "## Objetivo\n\nTrocar o spread de `Set` em `packages/lib/shortBreak.ts` por `Array.from`, para que o type-check passe com o target es5 do `packages/tsconfig/nextjs.json`. A linha atual é `return [...marked];` e o type-check acusa TS2802.\n\nO comportamento de `idsWithShortBreak` não muda.\n\n## Critérios de aceite\n\n1. `packages/lib/shortBreak.ts` retorna `Array.from(marked)` no lugar de `[...marked]`, sem outra alteração de lógica.\n2. `corepack yarn vitest run packages/lib/shortBreak.test.ts` passa com os testes que já existem.\n3. `packages/lib/shortBreak.test.ts` ganha um teste que confirma que um span com dois intervalos curtos aparece uma única vez no resultado.\n4. `corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts` não tem erro.\n5. Um `tsc --noEmit --target es5 --lib es2015,dom` mínimo sobre `packages/lib/shortBreak.ts` deixa de acusar TS2802.\n\n## Fora de escopo\n\n- Alterar `packages/tsconfig/nextjs.json`, `apps/web/tsconfig.json` ou qualquer outro tsconfig.\n- Alterar `SHORT_BREAK_MINUTES`, a regra de intervalo ou a assinatura de `idsWithShortBreak`.\n- Alterar a auditoria `GHSA-xv26-6w52-cph6`.\n- Alterar `packages/lib/businessHours.ts`.\n- Alterar `harness/CHECKS.md`.\n\n## Gates do harness\n\n- H1: o controller para com o digest dos requisitos. Um comentário com o digest libera o plano.\n- H2: o plano é publicado com o fingerprint, e a aprovação é um comentário com esse fingerprint.\n- H3: revisão de código do commit candidato, com a verificação humana se o gate pedir.\n- H4: merge manual depois do comentário de que os gates passaram."
+    "body": "## Objetivo\n\nTrocar o spread de `Set` em `packages/lib/shortBreak.ts` por `Array.from`, para que o type-check passe com o target es5 do `packages/tsconfig/nextjs.json`. A linha atual \u00e9 `return [...marked];` e o type-check acusa TS2802.\n\nO comportamento de `idsWithShortBreak` n\u00e3o muda.\n\n## Crit\u00e9rios de aceite\n\n1. `packages/lib/shortBreak.ts` retorna `Array.from(marked)` no lugar de `[...marked]`, sem outra altera\u00e7\u00e3o de l\u00f3gica.\n2. `corepack yarn vitest run packages/lib/shortBreak.test.ts` passa com os testes que j\u00e1 existem.\n3. `packages/lib/shortBreak.test.ts` ganha um teste que confirma que um span com dois intervalos curtos aparece uma \u00fanica vez no resultado.\n4. `corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts` n\u00e3o tem erro.\n5. Um `tsc --noEmit --target es5 --lib es2015,dom` m\u00ednimo sobre `packages/lib/shortBreak.ts` deixa de acusar TS2802.\n\n## Fora de escopo\n\n- Alterar `packages/tsconfig/nextjs.json`, `apps/web/tsconfig.json` ou qualquer outro tsconfig.\n- Alterar `SHORT_BREAK_MINUTES`, a regra de intervalo ou a assinatura de `idsWithShortBreak`.\n- Alterar a auditoria `GHSA-xv26-6w52-cph6`.\n- Alterar `packages/lib/businessHours.ts`.\n- Alterar `harness/CHECKS.md`.\n\n## Gates do harness\n\n- H1: o controller para com o digest dos requisitos. Um coment\u00e1rio com o digest libera o plano.\n- H2: o plano \u00e9 publicado com o fingerprint, e a aprova\u00e7\u00e3o \u00e9 um coment\u00e1rio com esse fingerprint.\n- H3: revis\u00e3o de c\u00f3digo do commit candidato, com a verifica\u00e7\u00e3o humana se o gate pedir.\n- H4: merge manual depois do coment\u00e1rio de que os gates passaram."
   },
   "issue_digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
   "base_sha": "780d7b598271e0a0e75e2fc475276e6b81c70c2f",
   "started_by": "victoria-ferrazzi",
   "attempts": 1,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T21:48:36.206Z",
+  "updated_at": "2026-11-10T22:30:00.000Z",
   "pm": {
-    "summary": "Trocar o spread de Set por Array.from em packages/lib/shortBreak.ts (return [...marked]) para corrigir o TS2802 com target es5, sem alterar a lógica de idsWithShortBreak. Adicionar um teste confirmando que um span com dois intervalos curtos aparece uma única vez no resultado. Fora de escopo: tsconfigs, SHORT_BREAK_MINUTES, a regra de intervalo, a assinatura, GHSA-xv26-6w52-cph6, businessHours.ts e harness/CHECKS.md.",
+    "summary": "Trocar o spread de Set por Array.from em packages/lib/shortBreak.ts (return [...marked]) para corrigir o TS2802 com target es5, sem alterar a l\u00f3gica de idsWithShortBreak. Adicionar um teste confirmando que um span com dois intervalos curtos aparece uma \u00fanica vez no resultado. Fora de escopo: tsconfigs, SHORT_BREAK_MINUTES, a regra de intervalo, a assinatura, GHSA-xv26-6w52-cph6, businessHours.ts e harness/CHECKS.md.",
     "questions": [],
     "scope_type": "change",
     "complexity": "simple",
@@ -20,7 +20,7 @@
   },
   "ambiguity": {
     "score": 0,
-    "summary": "Objetivo, escopo e critérios de aceite são concretos e verificáveis. A linha `return [...marked];` existe em `packages/lib/shortBreak.ts` (linha 30) e o target es5 está em `packages/tsconfig/nextjs.json`, então a premissa confere. Os gates H1 a H4 são de processo e não alteram o plano técnico. Não há decisão de produto pendente."
+    "summary": "Objetivo, escopo e crit\u00e9rios de aceite s\u00e3o concretos e verific\u00e1veis. A linha `return [...marked];` existe em `packages/lib/shortBreak.ts` (linha 30) e o target es5 est\u00e1 em `packages/tsconfig/nextjs.json`, ent\u00e3o a premissa confere. Os gates H1 a H4 s\u00e3o de processo e n\u00e3o alteram o plano t\u00e9cnico. N\u00e3o h\u00e1 decis\u00e3o de produto pendente."
   },
   "requirements_digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
   "requirements_approval": {
@@ -29,7 +29,7 @@
     "comment_id": 6779952921
   },
   "plan": {
-    "summary": "Em packages/lib/shortBreak.ts, trocar só o retorno `return [...marked];` por `return Array.from(marked);`. O Set continua a deduplicar os ids; a lógica de idsWithShortBreak (filtro, ordenação, comparação de gap e assinatura) permanece. Em packages/lib/shortBreak.test.ts, acrescentar um teste vitest no describe existente: três spans em que o do meio participa de dois intervalos menores que 10 minutos (10:00–10:30, 10:35–11:00 e 11:05–11:30 BRT em 2026-09-28, no mesmo helper span) e o id do meio aparece uma única vez.",
+    "summary": "Em packages/lib/shortBreak.ts, trocar s\u00f3 o retorno `return [...marked];` por `return Array.from(marked);`. O Set continua a deduplicar os ids; a l\u00f3gica de idsWithShortBreak (filtro, ordena\u00e7\u00e3o, compara\u00e7\u00e3o de gap e assinatura) permanece. Em packages/lib/shortBreak.test.ts, acrescentar um teste vitest no describe existente: tr\u00eas spans em que o do meio participa de dois intervalos menores que 10 minutos (10:00\u201310:30, 10:35\u201311:00 e 11:05\u201311:30 BRT em 2026-09-28, no mesmo helper span) e o id do meio aparece uma \u00fanica vez.",
     "files": [
       "packages/lib/shortBreak.ts",
       "packages/lib/shortBreak.test.ts"
@@ -41,11 +41,11 @@
       }
     ],
     "acceptance": [
-      "packages/lib/shortBreak.ts passa a retornar Array.from(marked) no lugar de [...marked], sem outra alteração de lógica, de SHORT_BREAK_MINUTES, da regra de intervalo ou da assinatura de idsWithShortBreak.",
-      "corepack yarn vitest run packages/lib/shortBreak.test.ts passa com os testes que já existem.",
-      "packages/lib/shortBreak.test.ts ganha um teste vitest em que um span com dois intervalos curtos (pares 1–2 e 2–3, gaps de 5 minutos) aparece uma única vez no resultado, por exemplo expect(ids.filter((id) => id === 2)).toEqual([2]).",
-      "corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts não tem erro.",
-      "Um tsc --noEmit --target es5 --lib es2015,dom mínimo sobre packages/lib/shortBreak.ts deixa de acusar TS2802, sem alterar tsconfig."
+      "packages/lib/shortBreak.ts passa a retornar Array.from(marked) no lugar de [...marked], sem outra altera\u00e7\u00e3o de l\u00f3gica, de SHORT_BREAK_MINUTES, da regra de intervalo ou da assinatura de idsWithShortBreak.",
+      "corepack yarn vitest run packages/lib/shortBreak.test.ts passa com os testes que j\u00e1 existem.",
+      "packages/lib/shortBreak.test.ts ganha um teste vitest em que um span com dois intervalos curtos (pares 1\u20132 e 2\u20133, gaps de 5 minutos) aparece uma \u00fanica vez no resultado, por exemplo expect(ids.filter((id) => id === 2)).toEqual([2]).",
+      "corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts n\u00e3o tem erro.",
+      "Um tsc --noEmit --target es5 --lib es2015,dom m\u00ednimo sobre packages/lib/shortBreak.ts deixa de acusar TS2802, sem alterar tsconfig."
     ],
     "open_questions": [],
     "risk": "low"
@@ -56,7 +56,7 @@
     "missing_acceptance_criteria": [],
     "risk": "low",
     "requires_human": false,
-    "summary": "O plano cobre os cinco critérios: em packages/lib/shortBreak.ts só o retorno passa de [...marked] para Array.from(marked), com filtro, ordenação, comparação de gap, SHORT_BREAK_MINUTES e assinatura iguais; o teste novo no describe existente usa três spans (gaps de 5 minutos) e confirma que o span do meio aparece uma única vez; o aceite inclui o vitest já existente, o biome nos dois arquivos e o tsc es5 sem TS2802, sem mudar tsconfig. Não há outro comportamento nem decisão de produto pendente."
+    "summary": "O plano cobre os cinco crit\u00e9rios: em packages/lib/shortBreak.ts s\u00f3 o retorno passa de [...marked] para Array.from(marked), com filtro, ordena\u00e7\u00e3o, compara\u00e7\u00e3o de gap, SHORT_BREAK_MINUTES e assinatura iguais; o teste novo no describe existente usa tr\u00eas spans (gaps de 5 minutos) e confirma que o span do meio aparece uma \u00fanica vez; o aceite inclui o vitest j\u00e1 existente, o biome nos dois arquivos e o tsc es5 sem TS2802, sem mudar tsconfig. N\u00e3o h\u00e1 outro comportamento nem decis\u00e3o de produto pendente."
   },
   "plan_fingerprint": "ef6680613a3ca689387c4e623cdb2a29bf71e606f1584ccbdb4a703cb1c9d509",
   "approval": {
