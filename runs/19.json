@@ -10,12 +10,16 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T21:22:11.847Z",
+  "updated_at": "2026-11-10T21:22:39.273Z",
   "pm": {
     "summary": "Trocar o spread de Set (`[...marked]`) por `Array.from(marked)` em `packages/lib/shortBreak.ts` para corrigir o TS2802 com o target es5. Adicionar um teste de span com dois intervalos curtos e atualizar `harness/CHECKS.md`. Sem mudança de lógica, regra de horário ou tsconfig.",
     "questions": [],
     "scope_type": "change",
     "complexity": "simple",
     "requires_plan_approval": true
+  },
+  "ambiguity": {
+    "score": 0,
+    "summary": "Objetivo, escopo e critérios de aceite estão definidos. A troca de `[...marked]` por `Array.from(marked)` é única e verificável. `packages/tsconfig/nextjs.json` inclui `esnext` em `lib`, então `Array.from` tem tipagem. O TS2802 está registrado em `harness/CHECKS.md` na linha 30 de `shortBreak.ts`. Não há decisão de produto em aberto."
   }
 }
