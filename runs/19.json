@@ -1,5 +1,5 @@
 {
-  "status": "awaiting_requirements",
+  "status": "plan",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
@@ -10,7 +10,7 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T21:37:44.799Z",
+  "updated_at": "2026-11-10T21:39:26.257Z",
   "pm": {
     "summary": "Trocar o spread de Set por Array.from em packages/lib/shortBreak.ts (return [...marked]) para corrigir o TS2802 com target es5, sem alterar a lógica de idsWithShortBreak. Adicionar um teste confirmando que um span com dois intervalos curtos aparece uma única vez no resultado. Fora de escopo: tsconfigs, SHORT_BREAK_MINUTES, a regra de intervalo, a assinatura, GHSA-xv26-6w52-cph6, businessHours.ts e harness/CHECKS.md.",
     "questions": [],
@@ -22,5 +22,10 @@
     "score": 0,
     "summary": "Objetivo, escopo e critérios de aceite são concretos e verificáveis. A linha `return [...marked];` existe em `packages/lib/shortBreak.ts` (linha 30) e o target es5 está em `packages/tsconfig/nextjs.json`, então a premissa confere. Os gates H1 a H4 são de processo e não alteram o plano técnico. Não há decisão de produto pendente."
   },
-  "requirements_digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f"
+  "requirements_digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
+  "requirements_approval": {
+    "actor": "victoria-ferrazzi",
+    "digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
+    "comment_id": 6779952921
+  }
 }
