@@ -11,6 +11,15 @@ const span = (id: number, startUtc: string, endUtc: string) => ({
 });
 
 describe("idsWithShortBreak", () => {
+  it("lists a span once when it participates in two short breaks", () => {
+    const ids = idsWithShortBreak([
+      span(1, "2026-09-28T10:00:00-03:00", "2026-09-28T10:30:00-03:00"),
+      span(2, "2026-09-28T10:35:00-03:00", "2026-09-28T11:00:00-03:00"),
+      span(3, "2026-09-28T11:05:00-03:00", "2026-09-28T11:30:00-03:00"),
+    ]);
+
+    expect(ids.filter((id) => id === 2)).toEqual([2]);
+  });
   it("marks both meetings when the break is under 10 minutes", () => {
     // Monday 10:00–10:30 and 10:35–11:00 BRT
     const ids = idsWithShortBreak([
