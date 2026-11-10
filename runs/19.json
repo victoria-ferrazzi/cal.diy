@@ -10,5 +10,12 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T12:29:16.594Z"
+  "updated_at": "2026-11-10T12:29:35.847Z",
+  "pm": {
+    "summary": "Trocar o spread de `Set` por `Array.from` em `packages/lib/shortBreak.ts` para corrigir o TS2802 com target es5, sem mudar a lógica de `idsWithShortBreak`. Adicionar um teste para span com dois intervalos curtos aparecendo uma única vez e remover o TS2802 de `harness/CHECKS.md`. Não há tela nova.",
+    "questions": [],
+    "scope_type": "change",
+    "complexity": "simple",
+    "requires_plan_approval": true
+  }
 }
