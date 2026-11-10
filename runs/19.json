@@ -1,5 +1,5 @@
 {
-  "status": "plan",
+  "status": "evaluate",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
@@ -10,7 +10,7 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T21:39:26.257Z",
+  "updated_at": "2026-11-10T21:40:55.523Z",
   "pm": {
     "summary": "Trocar o spread de Set por Array.from em packages/lib/shortBreak.ts (return [...marked]) para corrigir o TS2802 com target es5, sem alterar a lógica de idsWithShortBreak. Adicionar um teste confirmando que um span com dois intervalos curtos aparece uma única vez no resultado. Fora de escopo: tsconfigs, SHORT_BREAK_MINUTES, a regra de intervalo, a assinatura, GHSA-xv26-6w52-cph6, businessHours.ts e harness/CHECKS.md.",
     "questions": [],
@@ -27,5 +27,27 @@
     "actor": "victoria-ferrazzi",
     "digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
     "comment_id": 6779952921
+  },
+  "plan": {
+    "summary": "Em packages/lib/shortBreak.ts, trocar só o retorno `return [...marked];` por `return Array.from(marked);`. O Set continua a deduplicar os ids; a lógica de idsWithShortBreak (filtro, ordenação, comparação de gap e assinatura) permanece. Em packages/lib/shortBreak.test.ts, acrescentar um teste vitest no describe existente: três spans em que o do meio participa de dois intervalos menores que 10 minutos (10:00–10:30, 10:35–11:00 e 11:05–11:30 BRT em 2026-09-28, no mesmo helper span) e o id do meio aparece uma única vez.",
+    "files": [
+      "packages/lib/shortBreak.ts",
+      "packages/lib/shortBreak.test.ts"
+    ],
+    "tests": [
+      {
+        "path": "packages/lib/shortBreak.test.ts",
+        "kind": "vitest"
+      }
+    ],
+    "acceptance": [
+      "packages/lib/shortBreak.ts passa a retornar Array.from(marked) no lugar de [...marked], sem outra alteração de lógica, de SHORT_BREAK_MINUTES, da regra de intervalo ou da assinatura de idsWithShortBreak.",
+      "corepack yarn vitest run packages/lib/shortBreak.test.ts passa com os testes que já existem.",
+      "packages/lib/shortBreak.test.ts ganha um teste vitest em que um span com dois intervalos curtos (pares 1–2 e 2–3, gaps de 5 minutos) aparece uma única vez no resultado, por exemplo expect(ids.filter((id) => id === 2)).toEqual([2]).",
+      "corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts não tem erro.",
+      "Um tsc --noEmit --target es5 --lib es2015,dom mínimo sobre packages/lib/shortBreak.ts deixa de acusar TS2802, sem alterar tsconfig."
+    ],
+    "open_questions": [],
+    "risk": "low"
   }
 }
