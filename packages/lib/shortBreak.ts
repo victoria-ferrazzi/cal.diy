@@ -27,5 +27,5 @@ export function idsWithShortBreak(spans: TimedSpan[], gapMinutes: number = SHORT
     }
   }
 
-  return [...marked];
+  return Array.from(marked);
 }
