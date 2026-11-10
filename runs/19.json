@@ -1,5 +1,5 @@
 {
-  "status": "awaiting_requirements",
+  "status": "plan",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
@@ -10,7 +10,7 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T12:29:59.540Z",
+  "updated_at": "2026-11-10T12:49:05.250Z",
   "pm": {
     "summary": "Trocar o spread de `Set` por `Array.from` em `packages/lib/shortBreak.ts` para corrigir o TS2802 com target es5, sem mudar a lógica de `idsWithShortBreak`. Adicionar um teste para span com dois intervalos curtos aparecendo uma única vez e remover o TS2802 de `harness/CHECKS.md`. Não há tela nova.",
     "questions": [],
@@ -22,5 +22,10 @@
     "score": 0,
     "summary": "Objetivo, escopo e aceite são claros. Trocar o spread do Set por Array.from em shortBreak.ts, com testes e checks listados. O tsconfig usa lib com esnext, então Array.from tipa sem problema. Fora de escopo está explícito. Os gates H1 a H4 são de processo e não afetam o entendimento do trabalho."
   },
-  "requirements_digest": "a6f51585948f6ebe16fd15b48b69fa59a6aff00b60726df75d6dc1d59c20760f"
+  "requirements_digest": "a6f51585948f6ebe16fd15b48b69fa59a6aff00b60726df75d6dc1d59c20760f",
+  "requirements_approval": {
+    "actor": "victoria-ferrazzi",
+    "digest": "a6f51585948f6ebe16fd15b48b69fa59a6aff00b60726df75d6dc1d59c20760f",
+    "comment_id": 6767742592
+  }
 }
