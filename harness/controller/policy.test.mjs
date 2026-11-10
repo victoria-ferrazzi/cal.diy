@@ -10,6 +10,8 @@ import {
   matchingLines,
   planFingerprint,
   planNeedsApproval,
+  requirementsDecision,
+  requirementsDigest,
   safePath,
 } from "./policy.mjs";
 
@@ -110,6 +112,31 @@ describe("implementation excerpts", () => {
     expect(matchingLines(content, hints)).toBe(
       '"outside_business_hours_message": "Esta reserva está fora do horário comercial.",'
     );
+  });
+});
+
+describe("requirements gate", () => {
+  const requirementsIssue = { number: 4, title: "Aviso", body: "Texto estável." };
+
+  it("releases the plan only when the comment is exactly the pending digest", () => {
+    const pending = requirementsDigest(requirementsIssue);
+    expect(requirementsDecision(pending, pending, requirementsIssue)).toEqual({
+      release: true,
+      reason: "approved",
+      digest: pending,
+    });
+    expect(requirementsDecision(pending, `${pending} obrigado`, requirementsIssue).release).toBe(false);
+  });
+
+  it("keeps the pause when the issue changes and rejects the old digest", () => {
+    const pending = requirementsDigest(requirementsIssue);
+    const changed = { ...requirementsIssue, body: "Texto novo." };
+    const decision = requirementsDecision(pending, pending, changed);
+    expect(decision.release).toBe(false);
+    expect(decision.reason).toBe("issue_changed");
+    expect(decision.digest).not.toBe(pending);
+    expect(requirementsDecision(pending, decision.digest, changed).release).toBe(false);
+    expect(requirementsDecision(decision.digest, decision.digest, changed).release).toBe(true);
   });
 });
 
