@@ -81,6 +81,24 @@ export function issueSnapshot(issue) {
   };
 }
 
+export function requirementsDigest(issue) {
+  return digest(issueSnapshot(issue));
+}
+
+export function requirementsDecision(pendingDigest, commentBody, issue) {
+  const current = requirementsDigest(issue);
+  const token = String(commentBody ?? "")
+    .trim()
+    .toLowerCase();
+  if (current !== pendingDigest) {
+    return { release: false, reason: "issue_changed", digest: current };
+  }
+  if (token !== pendingDigest) {
+    return { release: false, reason: "mismatch", digest: pendingDigest };
+  }
+  return { release: true, reason: "approved", digest: pendingDigest };
+}
+
 export function planFingerprint(issue, baseSha, plan, evaluation) {
   return digest({
     issue: issueSnapshot(issue),

@@ -16,6 +16,8 @@ import {
   matchingLines,
   planFingerprint,
   planNeedsApproval,
+  requirementsDecision,
+  requirementsDigest,
   safePath,
 } from "./controller/policy.mjs";
 
@@ -510,10 +512,9 @@ async function start(github, issueNumber, actor) {
     await comment(github, issueNumber, "A mudança pede design. Esta execução não publica opções de tela.");
     return;
   }
-  const baseNow = await github.mainSha();
-  assertCurrent(bundle, issue, baseNow);
-  await planAndEvaluate(github, bundle);
-  await publishPlan(github, bundle, baseNow);
+  const pendingRequirements = requirementsDigest(issue);
+  await save(github, bundle, "awaiting_requirements", { requirements_digest: pendingRequirements });
+  await comment(github, issueNumber, pendingRequirements);
 }
 
 async function approve(github, issueNumber, actor, body, commentId) {
@@ -538,6 +539,31 @@ async function approve(github, issueNumber, actor, body, commentId) {
   if (bundle.state.status === "implement") {
     await comment(github, issueNumber, "A implementação aprovada continua a partir deste comentário.");
     await implement(github, bundle);
+    return;
+  }
+  if (bundle.state.status === "awaiting_requirements") {
+    const decision = requirementsDecision(bundle.state.requirements_digest, body, issue);
+    if (!decision.release && decision.reason === "issue_changed") {
+      await save(github, bundle, "awaiting_requirements", {
+        requirements_digest: decision.digest,
+        issue: issueSnapshot(issue),
+        issue_digest: decision.digest,
+      });
+      await comment(github, issueNumber, decision.digest);
+      return;
+    }
+    if (!decision.release) {
+      await comment(github, issueNumber, "O comentário não é o digest dos requisitos pendente.");
+      return;
+    }
+    await save(github, bundle, "plan", {
+      requirements_approval: { actor, digest: decision.digest, comment_id: commentId },
+      issue: issueSnapshot(issue),
+      issue_digest: decision.digest,
+      base_sha: baseSha,
+    });
+    await planAndEvaluate(github, bundle);
+    await publishPlan(github, bundle, baseSha);
     return;
   }
   if (bundle.state.status === "awaiting_approval") {
