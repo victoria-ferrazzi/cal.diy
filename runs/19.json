@@ -1,5 +1,5 @@
 {
-  "status": "plan",
+  "status": "evaluate",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
@@ -10,7 +10,7 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T22:35:06.364Z",
+  "updated_at": "2026-11-10T22:37:59.761Z",
   "pm": {
     "summary": "Substituir spread de Set por Array.from em packages/lib/shortBreak.ts para resolver o erro TS2802 com target ES5 e adicionar teste de deduplicação de intervalo.",
     "questions": [],
@@ -27,5 +27,27 @@
     "actor": "victoria-ferrazzi",
     "digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
     "comment_id": 6781146602
+  },
+  "plan": {
+    "summary": "Em packages/lib/shortBreak.ts, trocar somente o return [...marked] por return Array.from(marked), para o type-check com target es5 deixar de acusar TS2802. O comportamento de idsWithShortBreak permanece o mesmo. Em packages/lib/shortBreak.test.ts, acrescentar um teste vitest em que o span do meio, com dois intervalos curtos, aparece uma única vez.",
+    "files": [
+      "packages/lib/shortBreak.ts",
+      "packages/lib/shortBreak.test.ts"
+    ],
+    "tests": [
+      {
+        "path": "packages/lib/shortBreak.test.ts",
+        "kind": "vitest"
+      }
+    ],
+    "acceptance": [
+      "packages/lib/shortBreak.ts passa a retornar Array.from(marked) no lugar de return [...marked], sem outra alteração de lógica: o spread de valid, SHORT_BREAK_MINUTES, a comparação gap < gapMinutes e a assinatura de idsWithShortBreak ficam iguais.",
+      "corepack yarn vitest run packages/lib/shortBreak.test.ts passa com os cinco testes que já existem.",
+      "packages/lib/shortBreak.test.ts ganha um it no describe idsWithShortBreak: três spans em America/Sao_Paulo, 10:00–10:30, 10:35–11:00 e 11:05–11:30 (ids 1, 2 e 3; instantes 2026-09-28T13:00:00.000Z–13:30, 13:35–14:00 e 14:05–14:30). O id 2 participa dos dois intervalos de 5 minutos e expect(ids.sort()).toEqual([1, 2, 3]) confirma que ele aparece uma única vez.",
+      "corepack yarn biome check packages/lib/shortBreak.ts packages/lib/shortBreak.test.ts não tem erro.",
+      "Um tsc --noEmit --target es5 --lib es2015,dom mínimo sobre packages/lib/shortBreak.ts deixa de acusar TS2802. Nenhum tsconfig, businessHours.ts, harness/CHECKS.md nem a auditoria GHSA-xv26-6w52-cph6 é alterado."
+    ],
+    "open_questions": [],
+    "risk": "low"
   }
 }
