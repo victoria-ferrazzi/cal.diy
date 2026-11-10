@@ -1,5 +1,5 @@
 {
-  "status": "awaiting_requirements",
+  "status": "plan",
   "issue": {
     "number": 19,
     "title": "fix(lib): use Array.from for short break ids",
@@ -10,7 +10,7 @@
   "started_by": "victoria-ferrazzi",
   "attempts": 0,
   "clarification_comment_ids": [],
-  "updated_at": "2026-11-10T22:34:20.912Z",
+  "updated_at": "2026-11-10T22:35:06.364Z",
   "pm": {
     "summary": "Substituir spread de Set por Array.from em packages/lib/shortBreak.ts para resolver o erro TS2802 com target ES5 e adicionar teste de deduplicação de intervalo.",
     "questions": [],
@@ -22,5 +22,10 @@
     "score": 0,
     "summary": "Objetivo, escopo e critérios de aceite são específicos e verificáveis: trocar `[...marked]` por `Array.from(marked)` em `packages/lib/shortBreak.ts`, com comandos de verificação, um teste de span com dois intervalos curtos e lista explícita de itens fora de escopo. Os gates H1 a H4 são de processo do harness e não alteram o trabalho técnico, então bastam para planejar."
   },
-  "requirements_digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f"
+  "requirements_digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
+  "requirements_approval": {
+    "actor": "victoria-ferrazzi",
+    "digest": "e7d3f024ab591a70a8bb686b3cc8f7367520c6e80a4f676a5fd34d8ec9238b1f",
+    "comment_id": 6781146602
+  }
 }
