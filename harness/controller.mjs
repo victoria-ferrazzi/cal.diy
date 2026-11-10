@@ -22,6 +22,7 @@ import {
 const MAX_PLAN_REVISIONS = 1;
 const MAX_IMPLEMENT_ATTEMPTS = 2;
 const IMPLEMENT_TIMEOUT_MS = 20 * 60 * 1000;
+const REVIEW_TIMEOUT_MS = 10 * 60 * 1000;
 
 function readEvent() {
   return {
@@ -358,7 +359,8 @@ async function reviewCandidate(github, bundle) {
       `Plano: ${JSON.stringify(bundle.state.plan)}`,
       `Check: ${JSON.stringify(check)}`,
       `Diff: ${diff.slice(0, 20000)}`,
-    ].join("\n\n")
+    ].join("\n\n"),
+    { timeoutMs: REVIEW_TIMEOUT_MS }
   );
   if (
     testReview.head_sha !== headSha ||
@@ -380,7 +382,8 @@ async function reviewCandidate(github, bundle) {
       `Issue: ${JSON.stringify(bundle.state.issue)}`,
       `Plano: ${JSON.stringify(bundle.state.plan)}`,
       `Diff: ${diff.slice(0, 20000)}`,
-    ].join("\n\n")
+    ].join("\n\n"),
+    { timeoutMs: REVIEW_TIMEOUT_MS }
   );
   const gate = codeReviewGate(bundle.state.plan.files, codeEvals, headSha);
   const review = await runAgent(
@@ -392,7 +395,8 @@ async function reviewCandidate(github, bundle) {
       `Gate: ${JSON.stringify(gate)}`,
       `Evals: ${JSON.stringify(codeEvals)}`,
       `Diff: ${diff.slice(0, 20000)}`,
-    ].join("\n\n")
+    ].join("\n\n"),
+    { timeoutMs: REVIEW_TIMEOUT_MS }
   );
   if (
     review.head_sha !== headSha ||
