@@ -75,11 +75,12 @@ Merge de outro SHA não conclui a tarefa. O job da versão publicada só aceita 
 
 - Uma revisão de plano.
 - Duas tentativas de implementação.
+- 10 minutos no planejador e na avaliação do plano.
 - 20 minutos no implementador.
 - 10 minutos no Tester, na eval de código e no Reviewer.
 
-Estouro de tempo interrompe a etapa e não avança o gate. Este desenho não cria outro limite.
+Estouro de tempo interrompe a etapa e não avança o gate. Um comentário com o estado em `plan` ou `evaluate` refaz o planejamento. Um comentário com o estado em `implement` refaz a implementação.
 
 ## O que este desenho não implementa
 
-H1 está implementado em `harness/controller.mjs` e testado em `harness/controller/policy.test.mjs`. Ainda não está na `main`. H2, H3 e H4 já têm o comportamento descrito acima. A prova deliberada de invalidar uma aprovação continua pendente. A issue #10 não serve como essa prova.
+H1 está na `main` desde a PR #18. H2, H3 e H4 já têm o comportamento descrito acima. A prova deliberada de invalidar uma aprovação continua pendente. A issue #10 não serve como essa prova.
