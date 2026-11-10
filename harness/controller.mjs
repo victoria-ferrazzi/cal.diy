@@ -23,6 +23,7 @@ import {
 
 const MAX_PLAN_REVISIONS = 1;
 const MAX_IMPLEMENT_ATTEMPTS = 2;
+const PLAN_TIMEOUT_MS = 10 * 60 * 1000;
 const IMPLEMENT_TIMEOUT_MS = 20 * 60 * 1000;
 const REVIEW_TIMEOUT_MS = 10 * 60 * 1000;
 
@@ -106,7 +107,8 @@ async function planAndEvaluate(github, bundle) {
       "O plano cobre o objetivo e o aceite da issue. Inclua um teste executável por vitest para o comportamento pedido.",
       `Issue: ${JSON.stringify(issue)}`,
       `Pesquisa e PM: ${JSON.stringify({ pm: bundle.state.pm, research: bundle.state.research })}`,
-    ].join("\n\n")
+    ].join("\n\n"),
+    { timeoutMs: PLAN_TIMEOUT_MS }
   );
   let plan = completePlanFiles(planResult);
   for (const filePath of plan.files) {
@@ -128,7 +130,8 @@ async function planAndEvaluate(github, bundle) {
         `Issue: ${JSON.stringify(issue)}`,
         `Plano anterior: ${JSON.stringify(plan)}`,
         `Feedback: ${JSON.stringify(evaluation)}`,
-      ].join("\n\n")
+      ].join("\n\n"),
+      { timeoutMs: PLAN_TIMEOUT_MS }
     );
     plan = completePlanFiles(planResult);
     for (const filePath of plan.files) {
@@ -148,7 +151,8 @@ async function evaluatePlan(issue, plan) {
       "Nota 3 só quando cada aceite da issue está coberto e o plano não acrescenta outro comportamento.",
       `Issue: ${JSON.stringify(issue)}`,
       `Plano: ${JSON.stringify(plan)}`,
-    ].join("\n\n")
+    ].join("\n\n"),
+    { timeoutMs: PLAN_TIMEOUT_MS }
   );
   if (!Number.isInteger(evaluation.score) || evaluation.score < 0 || evaluation.score > 3) {
     throw new GateError("Plan evaluation score is invalid");
@@ -562,6 +566,13 @@ async function approve(github, issueNumber, actor, body, commentId) {
       issue_digest: decision.digest,
       base_sha: baseSha,
     });
+    await planAndEvaluate(github, bundle);
+    await publishPlan(github, bundle, baseSha);
+    return;
+  }
+  if (bundle.state.status === "plan" || bundle.state.status === "evaluate") {
+    assertCurrent(bundle, issue, baseSha);
+    await comment(github, issueNumber, "O planejamento continua a partir deste comentário.");
     await planAndEvaluate(github, bundle);
     await publishPlan(github, bundle, baseSha);
     return;
